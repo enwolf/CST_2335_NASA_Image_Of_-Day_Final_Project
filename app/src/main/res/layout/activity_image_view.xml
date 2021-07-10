@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:id="@+id/imageViewActivityContainer"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ImageViewActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+    <TextView android:id="@+id/dateTitleXML"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="25dp"
+        android:text="@string/DateTitleString"
+                                                    />
+
+    <TextView android:id="@+id/dateTitleTextXML"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_toRightOf="@+id/dateTitleXML"
+                                                    />
+
+    <TextView android:id="@+id/urlTitleXML"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/dateTitleXML"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="25dp"
+
+        android:text="@string/urlTitleString"
+
+                                                    />
+
+    <TextView android:id="@+id/urlTitleTextXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_toRightOf="@+id/urlTitleXML"
+        android:layout_below="@id/dateTitleTextXML"
+                                                    />
+
+    <ImageView android:id="@+id/nasaImageContainer"
+
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+
+        android:layout_below="@id/urlTitleXML"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+
+        android:background="@drawable/ic_launcher_background"
+
+                                                    />
+
+
+    <TextView android:id="@+id/expTitleXML"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/nasaImageContainer"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="8dp"
+
+        android:text="@string/expTitleString"
+
+
+                                                    />
+
+    <TextView android:id="@+id/expTextXML"
+
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+
+        android:layout_below="@id/nasaImageContainer"
+        android:layout_marginTop="20dp"
+
+        android:layout_toRightOf="@+id/expTitleXML"
+
+
+                                                    />
+
+
+    <Button android:id="@+id/hdUrlButton"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="40dp"
+
+        android:text="@string/hdUrlBtnString"
+                                                    />
+
+</RelativeLayout>

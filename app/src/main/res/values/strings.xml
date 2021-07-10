@@ -1,3 +1,15 @@
 <resources>
+
     <string name="app_name">CST_2335_Final_Project</string>
+
+    <!--   Start Activity Strings      -->
+    <string name="startTitleTextString">NASA IMAGE DAY</string>
+    <string name="startBtnTextString">Click to start!</string>
+
+    <!--   Image View Activity Strings  -->
+    <string name="DateTitleString">Date:</string>
+    <string name="urlTitleString">URL: </string>
+    <string name="expTitleString">Explanation: </string>
+    <string name="hdUrlBtnString">View HD Image </string>
+
 </resources>
