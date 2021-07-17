@@ -51,4 +51,18 @@
         android:text="@string/startBtnTextString"
                                                                 />
 
+    <Button android:id="@+id/savedActivityBtn"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/startActivityBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+
+
+        android:background="@color/white"
+        android:text="Image List" />
+
+
 </RelativeLayout>
