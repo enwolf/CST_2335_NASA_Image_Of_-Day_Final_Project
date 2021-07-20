@@ -13,8 +13,16 @@ public class ImageData {
     private String title;
     private String urlString;
     private String fileName;
-    private URL url;
-    private URL hdUrl;
+
+    //private URL url;
+    //private URL hdUrl;
+
+    /* ImageData Constructor
+
+       Initializes object with class data members as parameters.
+
+
+     */
 
     ImageData(long id, String date, String explanation, String hdUrlString, String title, String urlString, String fileName ){
 
@@ -25,25 +33,19 @@ public class ImageData {
         this.title = title;
         this.urlString = urlString;
         this.fileName = fileName;
-
+/*
         try {
             this.url = new URL(urlString);
             this.hdUrl = new URL(hdUrlString);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
+*/
     }
 
 
 
-
-
-
-
-
-
-
+//Getter and setter methods for class members
 
     public long getId() {
         return id;

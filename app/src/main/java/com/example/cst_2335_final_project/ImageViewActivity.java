@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ImageViewActivity extends AppCompatActivity {
 
@@ -71,6 +72,12 @@ public class ImageViewActivity extends AppCompatActivity {
     private String FileNameWithoutExtension;
     private String FileName;
     private String Title;
+    private String passedDate;
+    private Intent pickedDateValues;
+
+
+    String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    String[] stringDateArray = stringDate.split("-");
 
     Context context = this;
 
@@ -97,7 +104,7 @@ public class ImageViewActivity extends AppCompatActivity {
                     Log.i("Test Date", "currentTimeFormatted get month = " + (curMonth));
                     Log.i("Test Date", "currentTimeFormatted get day = " + curDay );
 
-                    
+
 
                 } catch (ParseException e){
                     e.printStackTrace();
@@ -105,9 +112,35 @@ public class ImageViewActivity extends AppCompatActivity {
             }
 */
 
+
+
+    /* ImageViewActivity.java onCreate()
+
+
+      After loading activity_image_view.xml we link our views with their java objects
+      progBar set to VISIBLE and progress is set to 0 .
+
+      Checks to see if date has been passed from PickedDateActivity, if so loads URL with user
+      chosen date, if the date is null then it loads the image for today's date.
+
+      Then an object of our getNasaDataJSON class is created and pass the URl we wil use to parse data
+      from which is set to currently load todays date.
+
+      openDatabaseConnection() is called on our dbObject so that the database connection is opened and
+      we can save image + data into SavedImage_DB
+
+      setOnClickListener is set to open default browser
+
+      saveBtn setOnClickListener set to save data values into using ContentValues with DatabaseOpener
+      column names to save values into SavedImage_DB
+
+      createDirectoryAndSaveFile() is called to store current image into application cache sub
+      directory and a Snackbar is displayed with an option to view your saved images.
+
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
@@ -125,16 +158,41 @@ public class ImageViewActivity extends AppCompatActivity {
 
         openHD_URL_Btn = findViewById(R.id.hdUrlButton);
 
+        openDatabaseConnection();
+
+
+        pickedDateValues = getIntent();
+        passedDate = pickedDateValues.getStringExtra("date");
+
+        if(passedDate != null)
+        Log.i("Test Picked Date", passedDate);
 
         getNasaDataJSON queryJSON = new getNasaDataJSON();
-        queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=2020-07-15");
 
-        openDatabaseConnection(dbObject);
+        if(passedDate != null) {
+            Log.i("Test Picked Date", passedDate);
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + passedDate);
+        } else {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+        }
 
-        //loadDataFromDatabase(); Can most likely be removed.
+        //+ stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]
 
-        //could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
+
+
+
+        //instead of url could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
         //viewImage.setOnClickListener(Click -> startActivity(openBrowser));
+
+        Log.i("Test Date", stringDate);
+        Log.i("Test Date", "Year = " + stringDateArray[0]);
+        Log.i("Test Date", "Month = " + stringDateArray[1]);
+        Log.i("Test Date", "Day = " + stringDateArray[2]);
+        Log.i("Test Date", stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+        Log.i("Test Date", "Todays Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+
+
+
 
 
         openHD_URL_Btn.setOnClickListener(Click -> startActivity(openBrowser) );
@@ -150,11 +208,11 @@ public class ImageViewActivity extends AppCompatActivity {
             newRowValues.put(DatabaseOpener.COL_URL, URLPath);
             newRowValues.put(DatabaseOpener.COL_FILENAME, FileName);
 
-            long newID = dbObject.insert(DatabaseOpener.TABLE_NAME,null,newRowValues);
+            long newID = dbObject.insert(DatabaseOpener.TABLE_NAME,null, newRowValues);
 
             createDirectoryAndSaveFile(spaceImage,FileName);
-            Intent savedActivity = new Intent(this, SavedImages.class);
 
+            Intent savedActivity = new Intent(this, SavedImages.class);
             Snackbar.make(saveBtn, getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
                     .setAction(getResources().getString(R.string.snackbarCallToAction), click-> startActivity(savedActivity))
                     .show();
@@ -162,6 +220,10 @@ public class ImageViewActivity extends AppCompatActivity {
 
         });
     }
+
+
+
+
                                              //Type1  Type2   Type3
     private class getNasaDataJSON extends AsyncTask< String, Integer, String>
     {
@@ -229,7 +291,7 @@ public class ImageViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 publishProgress(100);
-              return "Done";
+              return "Complete";
             }
 
                 //Type 2
@@ -252,13 +314,36 @@ public class ImageViewActivity extends AppCompatActivity {
             }
         }
 
+    /*  createObjectJSON()
+
+        Parameters:
+        URL url, this is the URl from which we will parse the data from and store within our JSON Object.
+
+        Behavior: Takes a URl and use HttpURLConnection to open a connection with the address stored
+        in that URL and process the data provided from the URL as an input stream which is passed
+        into our BufferedReader before being assemble as a String which is then used to generate
+        the JSON Object to be returned by this method.
+
+        Method variables:
+
+        HttpURLConnection urlConnection: used to open connection with URL passed into method as parmater.
+        InputStream urlResponse, stores the response from the URL as an input stream
+        BufferedReader bufferedReader: takes the urlResponse as an input stream.
+        StringBuilder stringBuilder: stores one  the data from the bufferedReader into
+
+        String result: takes the values stored in our stringBuilder and reads them one line at a time
+        and assemble them into a results string which we use to build our JSON Object form
+
+        JSONObject reportJSON: creates our JSON object from result which is then returned by the method.
+
+ */
 
     public JSONObject createObjectJSON(URL url) throws IOException, JSONException {
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream response = urlConnection.getInputStream();
+            InputStream urlResponse = urlConnection.getInputStream();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlResponse, "UTF-8"), 8);
             StringBuilder stringBuilder = new StringBuilder();
 
             String currentLine = null;
@@ -277,11 +362,37 @@ public class ImageViewActivity extends AppCompatActivity {
 
         }
 
-    private void openDatabaseConnection(SQLiteDatabase dbObject){
+    /*  openDatabaseConnection()
+
+
+        Behavior: opens connection for writable Database on db object take as parameter
+
+    */
+
+    private void openDatabaseConnection(){
 
         DatabaseOpener databaseOpener = new DatabaseOpener(this);
         dbObject = databaseOpener.getWritableDatabase();
     }
+
+    /*  createDirectoryAndSaveFile()
+
+        Parameters:
+        BitMap imageToSave the image we wish to save.
+        String fileName: the filename that the image is saved as.
+
+        Behavior: creates directory if it does not exist current, delete file if duplicate is found,
+        Stores image File in application cache sub directory imageFolder.
+
+        Method Variables:
+
+        File myDir: represents path to directory we want to save our file to
+        File file: file that we wish to save into our application director
+
+
+        Exception: handles FileNotFoundException when attempting to save image file
+
+     */
 
 
     private void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
@@ -310,8 +421,8 @@ public class ImageViewActivity extends AppCompatActivity {
 
             Log.i("createDirAndSaveFile", fileName + " saved to imageFolder Dir" ) ;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception FileNotFoundException) {
+            FileNotFoundException.printStackTrace();
         }
     }
 

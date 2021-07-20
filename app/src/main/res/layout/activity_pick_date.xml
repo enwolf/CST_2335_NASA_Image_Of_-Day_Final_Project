@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PickDateActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:text="Select Date to View Image"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        />
+
+    <TextView android:id="@+id/pickDateTitleXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Date of Image to view"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+
+        android:layout_above="@+id/pickDateEditTextXML"    />
+
+    <EditText android:id="@+id/pickDateEditTextXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Format: yyyy-mm-dd"
+        android:background="@color/cardview_light_background"
+
+        android:layout_centerInParent="true"
+
+        android:layout_marginTop="10dp"
+        android:padding="10dp"/>
+
+
+    <Button android:id="@+id/enteredDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickDateEditTextXML"
+
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:text="Click to view"
+
+        />
+
+
+</RelativeLayout>

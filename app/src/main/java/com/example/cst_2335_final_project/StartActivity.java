@@ -13,8 +13,10 @@ public class StartActivity extends AppCompatActivity {
 
     private Button startBtn;
     private Button savedBtn;
+    private Button pickedDateBtn;
     private Intent nextActivity;
     private Intent savedActivity;
+    private Intent pickedDateActivity;
 
 
     @Override
@@ -25,7 +27,7 @@ public class StartActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startActivityBtn);
         savedBtn = findViewById(R.id.savedActivityBtn);
-
+        pickedDateBtn = findViewById(R.id.pickedDateActivityBtn);
         //For now lets just go directly to the view image page, date picker to be the later intent to send to from start button
 
         nextActivity = new Intent(this, ImageViewActivity.class);
@@ -33,6 +35,9 @@ public class StartActivity extends AppCompatActivity {
 
         savedActivity = new Intent(this, SavedImages.class);
         savedBtn.setOnClickListener(click -> startActivity(savedActivity));
+
+        pickedDateActivity = new Intent(this, PickDateActivity.class);
+        pickedDateBtn.setOnClickListener(click -> startActivity(pickedDateActivity));
 
 
 

@@ -51,7 +51,8 @@
         android:text="@string/startBtnTextString"
                                                                 />
 
-    <Button android:id="@+id/savedActivityBtn"
+
+    <Button android:id="@+id/pickedDateActivityBtn"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +63,20 @@
 
 
         android:background="@color/white"
-        android:text="Image List" />
+        android:text="Pick Date for Image" />
+
+    <Button android:id="@+id/savedActivityBtn"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/pickedDateActivityBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+
+
+        android:background="@color/white"
+        android:text="@string/tempButton" />
 
 
 </RelativeLayout>

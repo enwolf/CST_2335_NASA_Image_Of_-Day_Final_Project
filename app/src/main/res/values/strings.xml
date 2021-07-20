@@ -4,7 +4,8 @@
 
     <!--   Start Activity Strings      -->
     <string name="startTitleTextString">NASA IMAGE DAY</string>
-    <string name="startBtnTextString">Click to start!</string>
+    <string name="startBtnTextString">View Today\'s Image</string>
+    <string name="tempButton">View Saved Images</string>
 
     <!--   Image View Activity Strings  -->
     <string name="DateTitleString">Date:</string>
