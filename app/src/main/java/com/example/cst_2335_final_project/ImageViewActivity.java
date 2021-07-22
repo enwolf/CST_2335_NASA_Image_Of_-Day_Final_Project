@@ -6,8 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,14 +13,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -30,23 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ImageViewActivity extends AppCompatActivity {
@@ -54,6 +41,7 @@ public class ImageViewActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 300;
 
     private final Intent openBrowser = new Intent(Intent.ACTION_VIEW);
+    private final String nasaApiKey = "0ZK9fHgnuczikynPWW6NolmHs5LqB6GzjZdDOoHC";
 
     private SQLiteDatabase dbObject;
     private TextView viewExp;
@@ -72,12 +60,14 @@ public class ImageViewActivity extends AppCompatActivity {
     private String FileNameWithoutExtension;
     private String FileName;
     private String Title;
-    private String passedDate;
+    private String passedDateEditText;
+    private String passedDatePickerDate;
     private Intent pickedDateValues;
 
 
-    String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-    String[] stringDateArray = stringDate.split("-");
+
+    private String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    private String[] stringDateArray = stringDate.split("-");
 
     Context context = this;
 
@@ -162,19 +152,32 @@ public class ImageViewActivity extends AppCompatActivity {
 
 
         pickedDateValues = getIntent();
-        passedDate = pickedDateValues.getStringExtra("date");
+        passedDateEditText = pickedDateValues.getStringExtra("date");
 
-        if(passedDate != null)
-        Log.i("Test Picked Date", passedDate);
+        passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
+
+
+
+
+        if (passedDatePickerDate != null)
+            Log.i("Test DatePicker Date", passedDatePickerDate);
+
 
         getNasaDataJSON queryJSON = new getNasaDataJSON();
 
-        if(passedDate != null) {
-            Log.i("Test Picked Date", passedDate);
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + passedDate);
-        } else {
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+
+
+
+        if (passedDatePickerDate != null){
+            Log.i("Test DatePicker Date", passedDatePickerDate);
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDatePickerDate);
+        }else if(passedDateEditText != null) {
+            Log.i("Test DatePicker Date", passedDateEditText);
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
+        }else{
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
         }
+
 
         //+ stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]
 

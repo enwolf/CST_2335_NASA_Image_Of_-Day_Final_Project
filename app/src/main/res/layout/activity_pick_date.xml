@@ -8,7 +8,7 @@
     android:background="@color/black"
     >
 
-    <TextView
+    <TextView android:id="@+id/pickDateHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -19,6 +19,19 @@
         android:textSize="30dp"
         />
 
+    <DatePicker android:id="@+id/datePickerXML"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/pickDateHeader"
+        android:datePickerMode="spinner"
+        android:layout_centerInParent="true"
+
+        android:background="@color/darkGray"
+        android:calendarViewShown="false"
+        android:layout_marginTop="50dp"
+
+        />
+
     <TextView android:id="@+id/pickDateTitleXML"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +39,8 @@
         android:textColor="@color/white"
         android:layout_centerInParent="true"
 
-        android:layout_above="@+id/pickDateEditTextXML"    />
+        android:layout_above="@+id/pickDateEditTextXML" />
+
 
     <EditText android:id="@+id/pickDateEditTextXML"
         android:layout_width="wrap_content"
@@ -37,17 +51,30 @@
         android:layout_centerInParent="true"
 
         android:layout_marginTop="10dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:layout_above="@id/enteredDateEditTextButton"
+        />
 
 
-    <Button android:id="@+id/enteredDateButton"
+    <Button android:id="@+id/enteredDateEditTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pickDateEditTextXML"
+        android:layout_alignParentStart="true"
 
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp"
         android:text="Click to view"
+
+        />
+
+    <Button android:id="@+id/enteredPickedDateButtonXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:text="View Selected Date"
 
         />
 
