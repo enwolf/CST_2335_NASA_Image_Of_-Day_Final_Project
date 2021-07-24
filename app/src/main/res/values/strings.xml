@@ -8,12 +8,19 @@
     <string name="tempButton">View Saved Images</string>
 
     <!--   Image View Activity Strings  -->
+    <string name="toolbarTitleImageViewActivity">Image View v1.0</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL: </string>
     <string name="expTitleString">Explanation: </string>
     <string name="hdUrlBtnString">View HD Image </string>
     <string name="snackbarMessage">Added to favorite ImageData list. </string>
     <string name="snackbarCallToAction">View Favorites Now!</string>
+
+
+    <!-- ToolBar Strings -->
+    <string name="icon3">Icon3</string>
+
+
 
 
 </resources>

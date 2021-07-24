@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout android:id="@+id/imageViewActivityContainer"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ImageViewActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black" >
+    android:background="@color/black"
+    >
+
+
+    <androidx.appcompat.widget.Toolbar  android:id="@+id/viewImageToolBarXML"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/white"
+        android:background="@color/darkGray"       />
 
 
     <TextView android:id="@+id/dateTitleXML"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/viewImageToolBarXML"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="25dp"
         android:text="@string/DateTitleString"
@@ -27,6 +36,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="25dp"
         android:layout_toRightOf="@+id/dateTitleXML"
+        android:layout_below="@+id/viewImageToolBarXML"
         android:textColor="@color/white"
                                                     />
 
@@ -57,13 +67,9 @@
 
         android:layout_width="match_parent"
         android:layout_height="250dp"
-
         android:layout_below="@id/urlTitleXML"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
-
-
-
                                                     />
 
 
@@ -75,10 +81,8 @@
         android:layout_below="@id/nasaImageContainer"
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
-
         android:text="@string/expTitleString"
         android:textColor="@color/white"
-
                                                     />
 
     <ScrollView android:id="@+id/scrollView"
@@ -90,8 +94,7 @@
         android:scrollbars="vertical"
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
-        android:layout_above="@id/hdUrlButton"
-             >
+        android:layout_above="@id/hdUrlButton"    >
 
 
         <TextView android:id="@+id/expTextXML"
@@ -102,8 +105,7 @@
             android:paddingRight="25dp"
             android:paddingLeft="25dp"
             android:paddingBottom="25dp"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white"         />
 
 
     </ScrollView>
@@ -115,14 +117,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-
-
-
         android:text="@string/hdUrlBtnString"
-                                                    />
+                                                     />
 
     <Button android:id="@+id/saveButton"
 
@@ -133,20 +131,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
 
-        android:text="save button"
-        />
+        android:text="save button"                    />
 
     <ProgressBar android:id="@+id/viewActivityProBar"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
 
-
-        android:visibility="invisible"
-
-
-
-        />
+        android:visibility="invisible"                 />
 
 
 </RelativeLayout>

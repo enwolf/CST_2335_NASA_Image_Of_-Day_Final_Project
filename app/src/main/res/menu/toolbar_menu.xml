@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/toolBarIconOne"
+        android:orderInCategory="10"
+        android:title="Icon1"
+        android:icon="@drawable/nasa_logo"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/toolBarIconTwo"
+        android:orderInCategory="10"
+        android:title="Icon2"
+        android:icon="@drawable/nasa_logo"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/toolBarIconThree"
+        android:orderInCategory="10"
+        android:title="@string/icon3"
+        android:icon="@drawable/nasa_logo"
+        app:showAsAction="always"/>
+
+
+    <item android:id="@+id/toolBarOverFlowOne"
+        android:orderInCategory="10"
+        android:title="Icon1"
+        android:icon="@drawable/nasa_logo"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,6 +1,7 @@
 package com.example.cst_2335_final_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,6 +54,8 @@ public class ImageViewActivity extends AppCompatActivity {
     private Button openHD_URL_Btn;
     private Button saveBtn;
     private Bitmap spaceImage;
+    private Intent pickedDateValues;
+    private Toolbar toolbar;
     private ProgressBar progBar;
     private String Date;
     private String Explanation;
@@ -62,7 +67,7 @@ public class ImageViewActivity extends AppCompatActivity {
     private String Title;
     private String passedDateEditText;
     private String passedDatePickerDate;
-    private Intent pickedDateValues;
+
 
 
 
@@ -70,38 +75,6 @@ public class ImageViewActivity extends AppCompatActivity {
     private String[] stringDateArray = stringDate.split("-");
 
     Context context = this;
-
-    /*
-    private Calendar myCal;
-    private String curYear;
-    private int curMonth;
-    private int curDay;
-    private Date currentTime = Calendar.getInstance().getTime();
-    private SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String curTimeCorrectFormat = myDateFormat.format(currentTime);
-    Date currentTimeFormatted = null;
-
-
-            {
-                try {
-                    currentTimeFormatted = myDateFormat.parse(curTimeCorrectFormat);
-
-                    curYear = currentTimeFormatted.toString().substring(currentTimeFormatted.toString().lastIndexOf(' ') + 1, currentTimeFormatted.toString().length() );
-                    curMonth = currentTimeFormatted.getMonth() + 1;
-                    curDay = currentTimeFormatted.getDay();
-                    Log.i("Test Date", "currentTimeFormatted toString() = " + currentTimeFormatted.toString() );
-                    Log.i("Test Date", "currentTimeFormatted get year = " + curYear);
-                    Log.i("Test Date", "currentTimeFormatted get month = " + (curMonth));
-                    Log.i("Test Date", "currentTimeFormatted get day = " + curDay );
-
-
-
-                } catch (ParseException e){
-                    e.printStackTrace();
-                }
-            }
-*/
-
 
 
     /* ImageViewActivity.java onCreate()
@@ -114,7 +87,7 @@ public class ImageViewActivity extends AppCompatActivity {
       chosen date, if the date is null then it loads the image for today's date.
 
       Then an object of our getNasaDataJSON class is created and pass the URl we wil use to parse data
-      from which is set to currently load todays date.
+      from which is set to currently load today's date.
 
       openDatabaseConnection() is called on our dbObject so that the database connection is opened and
       we can save image + data into SavedImage_DB
@@ -135,38 +108,32 @@ public class ImageViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
 
-        viewDate = findViewById(R.id.dateTextXML);
-        viewURL = findViewById(R.id.urlTextXML);
-        viewExp = findViewById(R.id.expTextXML);
+        openHD_URL_Btn = findViewById(R.id.hdUrlButton);
         viewImage = findViewById(R.id.nasaImageContainer);
-        saveBtn = findViewById(R.id.saveButton);
-        progBar = findViewById(R.id.viewActivityProBar);
-        progBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
-        progBar.setVisibility(View.VISIBLE);
+        progBar   = findViewById(R.id.viewActivityProBar);
+        viewDate  = findViewById(R.id.dateTextXML);
+        viewURL   = findViewById(R.id.urlTextXML);
+        viewExp   = findViewById(R.id.expTextXML);
+        saveBtn   = findViewById(R.id.saveButton);
 
+        progBar.setVisibility(View.VISIBLE);
         progBar.setProgress(0);
 
-        openHD_URL_Btn = findViewById(R.id.hdUrlButton);
+        toolbar = findViewById(R.id.viewImageToolBarXML);
+        toolbar.setTitle(R.string.toolbarTitleImageViewActivity);
 
+        setSupportActionBar(toolbar);
         openDatabaseConnection();
 
-
+        //Todo Maybe extract this to a method later
         pickedDateValues = getIntent();
         passedDateEditText = pickedDateValues.getStringExtra("date");
-
         passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
-
-
-
 
         if (passedDatePickerDate != null)
             Log.i("Test DatePicker Date", passedDatePickerDate);
 
-
         getNasaDataJSON queryJSON = new getNasaDataJSON();
-
-
-
 
         if (passedDatePickerDate != null){
             Log.i("Test DatePicker Date", passedDatePickerDate);
@@ -182,9 +149,7 @@ public class ImageViewActivity extends AppCompatActivity {
         //+ stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]
 
 
-
-
-        //instead of url could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
+        //Todo instead of url could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
         //viewImage.setOnClickListener(Click -> startActivity(openBrowser));
 
         Log.i("Test Date", stringDate);
@@ -195,39 +160,21 @@ public class ImageViewActivity extends AppCompatActivity {
         Log.i("Test Date", "Todays Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
 
 
-
-
-
         openHD_URL_Btn.setOnClickListener(Click -> startActivity(openBrowser) );
 
-        saveBtn.setOnClickListener(Click ->{
+        saveBtn.setOnClickListener(Click -> saveButtonAction() );
+    }
 
-            //ContentValues used to hold values to be entered into database.
-            ContentValues newRowValues = new ContentValues();
-            newRowValues.put(DatabaseOpener.COL_DATE, Date);
-            newRowValues.put(DatabaseOpener.COL_EXPLANATION, Explanation);
-            newRowValues.put(DatabaseOpener.COL_HD_URL, urlHdPath);
-            newRowValues.put(DatabaseOpener.COL_TITLE, Title);
-            newRowValues.put(DatabaseOpener.COL_URL, URLPath);
-            newRowValues.put(DatabaseOpener.COL_FILENAME, FileName);
-
-            long newID = dbObject.insert(DatabaseOpener.TABLE_NAME,null, newRowValues);
-
-            createDirectoryAndSaveFile(spaceImage,FileName);
-
-            Intent savedActivity = new Intent(this, SavedImages.class);
-            Snackbar.make(saveBtn, getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
-                    .setAction(getResources().getString(R.string.snackbarCallToAction), click-> startActivity(savedActivity))
-                    .show();
-
-
-        });
+    // Inflate the menu items for use in the action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
 
-
-
-                                             //Type1  Type2   Type3
+    //Type1  Type2   Type3
     private class getNasaDataJSON extends AsyncTask< String, Integer, String>
     {
            //Type1
@@ -329,7 +276,7 @@ public class ImageViewActivity extends AppCompatActivity {
 
         Method variables:
 
-        HttpURLConnection urlConnection: used to open connection with URL passed into method as parmater.
+        HttpURLConnection urlConnection: used to open connection with URL passed into method as parameter.
         InputStream urlResponse, stores the response from the URL as an input stream
         BufferedReader bufferedReader: takes the urlResponse as an input stream.
         StringBuilder stringBuilder: stores one  the data from the bufferedReader into
@@ -427,6 +374,43 @@ public class ImageViewActivity extends AppCompatActivity {
         } catch (Exception FileNotFoundException) {
             FileNotFoundException.printStackTrace();
         }
+    }
+
+    /* saveButtonAction()
+
+       Variables: ContentValues newRowValues stores dataValues to be inserted into database
+                  Intent savedActivity used with Snackbar to send user to the specific activity.
+
+       Method starts by passing data into newRowValues using .put we call DatabaseOpener calle's
+       static values for column name, and the data to be placed in that column.
+
+       once all values have inserted into  newRowValues we insert them into the database by calling
+       the DB object's insert method, taking the table name and values to be inserted.
+
+       We then updated the user with a snake bar confirming item has been saved and present's a button
+       which will take them to the SavedImages Activity.
+
+     */
+
+    private void saveButtonAction(){
+
+        //ContentValues used to hold values to be entered into database.
+        ContentValues newRowValues = new ContentValues();
+        newRowValues.put(DatabaseOpener.COL_DATE, Date);
+        newRowValues.put(DatabaseOpener.COL_EXPLANATION, Explanation);
+        newRowValues.put(DatabaseOpener.COL_HD_URL, urlHdPath);
+        newRowValues.put(DatabaseOpener.COL_TITLE, Title);
+        newRowValues.put(DatabaseOpener.COL_URL, URLPath);
+        newRowValues.put(DatabaseOpener.COL_FILENAME, FileName);
+
+        long newID = dbObject.insert(DatabaseOpener.TABLE_NAME,null, newRowValues);
+
+        createDirectoryAndSaveFile(spaceImage,FileName);
+
+        Intent savedActivity = new Intent(this, SavedImages.class);
+        Snackbar.make(saveBtn, getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
+                .setAction(getResources().getString(R.string.snackbarCallToAction), click-> startActivity(savedActivity))
+                .show();
     }
 
 }

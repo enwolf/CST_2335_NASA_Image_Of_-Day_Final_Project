@@ -72,14 +72,12 @@ public class PickDateActivity extends AppCompatActivity {
         String month;
         String day;
 
-
         year = String.valueOf(datePicker.getYear());
 
         if (datePicker.getMonth() < 10)
             month = "0" + (datePicker.getMonth() + 1);
         else
             month = String.valueOf(datePicker.getMonth() + 1);
-
 
         if (datePicker.getDayOfMonth() < 10)
             day = "0" + datePicker.getDayOfMonth();
