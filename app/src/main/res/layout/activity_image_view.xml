@@ -1,145 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:id="@+id/imageViewActivityContainer"
+<LinearLayout android:id="@+id/imageViewActivityContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ImageViewActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/black"
     >
 
 
     <androidx.appcompat.widget.Toolbar  android:id="@+id/viewImageToolBarXML"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@color/white"
-        android:background="@color/darkGray"       />
+        android:background="@color/lightBlack"       />
 
-
-    <TextView android:id="@+id/dateTitleXML"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewImageToolBarXML"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
-        android:text="@string/DateTitleString"
-        android:textColor="@color/white"
-                                                    />
-
-    <TextView android:id="@+id/dateTextXML"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
-        android:layout_toRightOf="@+id/dateTitleXML"
-        android:layout_below="@+id/viewImageToolBarXML"
-        android:textColor="@color/white"
-                                                    />
-
-    <TextView android:id="@+id/urlTitleXML"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@+id/dateTitleXML"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
-
-        android:text="@string/urlTitleString"
-        android:textColor="@color/white"
-                                                    />
-
-    <TextView android:id="@+id/urlTextXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
-        android:layout_toRightOf="@+id/urlTitleXML"
-        android:layout_below="@id/dateTextXML"
-        android:textColor="@color/white"
-                                                    />
-
-    <ImageView android:id="@+id/nasaImageContainer"
+    <androidx.drawerlayout.widget.DrawerLayout  android:id="@+id/sideMenuDrawerLayoutXML"
 
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/urlTitleXML"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-                                                    />
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
 
+        <com.google.android.material.navigation.NavigationView android:id="@+id/sideNavMenu"
 
-    <TextView android:id="@+id/expTitleXML"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/nasaImageContainer"
-        android:layout_marginTop="20dp"
-        android:layout_centerInParent="true"
-        android:text="@string/expTitleString"
-        android:textColor="@color/white"
-                                                    />
-
-    <ScrollView android:id="@+id/scrollView"
-
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/expTitleXML"
-        android:fillViewport="true"
-        android:scrollbars="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_centerInParent="true"
-        android:layout_above="@id/hdUrlButton"    >
-
-
-        <TextView android:id="@+id/expTextXML"
-
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:paddingRight="25dp"
-            android:paddingLeft="25dp"
-            android:paddingBottom="25dp"
-            android:textColor="@color/white"         />
-
-
-    </ScrollView>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            android:background="@color/lightBlack"
+            app:headerLayout="@layout/side_menu_header_layout"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/navigation_drawer_side_menu_layout" />
 
 
 
-    <Button android:id="@+id/hdUrlButton"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:text="@string/hdUrlBtnString"
-                                                     />
-
-    <Button android:id="@+id/saveButton"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textAlignment="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-
-        android:text="save button"                    />
-
-    <ProgressBar android:id="@+id/viewActivityProBar"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-
-        android:visibility="invisible"                 />
+        <RelativeLayout android:id="@+id/innerRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/viewImageToolBarXML" >
 
 
-</RelativeLayout>
+            <TextView android:id="@+id/dateTitleXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="70dp"
+                android:layout_marginLeft="25dp"
+                android:text="@string/DateTitleString"
+                android:textColor="@color/white"
+                                                            />
+
+            <TextView android:id="@+id/dateTextXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:layout_marginLeft="25dp"
+
+                android:layout_toRightOf="@+id/dateTitleXML"
+
+                android:textColor="@color/white"
+                                                            />
+
+            <TextView android:id="@+id/urlTitleXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/dateTitleXML"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+
+                android:text="@string/urlTitleString"
+                android:textColor="@color/white"
+                                                            />
+
+            <TextView android:id="@+id/urlTextXML"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@+id/urlTitleXML"
+                android:layout_below="@id/dateTextXML"
+                android:textColor="@color/white"
+                                                            />
+
+            <ImageView android:id="@+id/nasaImageContainer"
+
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/urlTitleXML"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="50dp"
+                                                            />
+
+
+            <TextView android:id="@+id/expTitleXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/nasaImageContainer"
+                android:layout_marginTop="20dp"
+                android:layout_centerInParent="true"
+                android:text="@string/expTitleString"
+                android:textColor="@color/white"
+                                                            />
+
+
+
+            <ScrollView android:id="@+id/scrollView"
+
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/expTitleXML"
+                android:fillViewport="true"
+                android:scrollbars="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:layout_centerInParent="true"
+                    >
+
+
+                <TextView android:id="@+id/expTextXML"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="15dp"
+
+                    android:textColor="@color/white"         />
+
+
+            </ScrollView>
+
+
+            <Button android:id="@+id/hdUrlButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/hdUrlBtnString"
+                                                             />
+
+            <Button android:id="@+id/saveButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textAlignment="center"
+                android:layout_marginTop="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+
+                android:text="save button"                    />
+
+
+
+            <ProgressBar android:id="@+id/viewActivityProBar"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+
+                android:visibility="invisible"                 />
+
+
+     </RelativeLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>

@@ -9,6 +9,7 @@
 
     <!--   Image View Activity Strings  -->
     <string name="toolbarTitleImageViewActivity">Image View v1.0</string>
+    <string name="helpMenuDialogTitleImageViewActivity">Image Viewer Activity</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL: </string>
     <string name="expTitleString">Explanation: </string>
@@ -16,11 +17,29 @@
     <string name="snackbarMessage">Added to favorite ImageData list. </string>
     <string name="snackbarCallToAction">View Favorites Now!</string>
 
+    <!--   Pick Date Activity Strings  -->
+    <string name="toolbarTitleDatePickerActivity">DatePicker v1.0</string>
+    <string name="helpMenuDialogTitleDatePickerActivity">Date Picker Activity</string>
+
+    <!--  Saved Images Activity Strings  -->
+    <string name="toolbarTitleSavedImagesActivity">Saved Images v1.0</string>
+    <string name="helpMenuDialogTitleSavedImagesActivity">Saved Images Activity</string>
 
     <!-- ToolBar Strings -->
     <string name="icon3">Icon3</string>
 
 
+    <!-- ToolBar Overflow Menu Strings -->
+    <string name="helpMenuTitle">Info</string>
+    <string name="helpParagraphOne">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget fringilla diam. Integer eu nulla aliquam nisi elementum tempor a nec magna. Aliquam mattis, nibh cursus posuere molestie, sem metus pharetra lacus, eget posuere neque quam et velit. </string>
+    <string name="helpParagraphTwo">Etiam ex diam, imperdiet vitae consequat in, aliquet quis metus. Fusce non diam iaculis, maximus lorem at, egestas lacus. Duis egestas semper dolor quis dignissim. Morbi lectus diam, laoreet non laoreet a, rhoncus eget risus</string>
+
+
+
+    <!-- drawer frame -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="sideMenuHeaderTitleText">NASA Image of the Day App</string>
 
 
 </resources>

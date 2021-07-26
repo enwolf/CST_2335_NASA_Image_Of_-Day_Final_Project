@@ -1,8 +1,14 @@
 package com.example.cst_2335_final_project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -17,14 +23,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -39,9 +47,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ImageViewActivity extends AppCompatActivity {
+public class ImageViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final int REQUEST_CODE = 300;
+    public static final int ACTIVITY_REQUEST_CODE = 300;
 
     private final Intent openBrowser = new Intent(Intent.ACTION_VIEW);
     private final String nasaApiKey = "0ZK9fHgnuczikynPWW6NolmHs5LqB6GzjZdDOoHC";
@@ -67,10 +75,6 @@ public class ImageViewActivity extends AppCompatActivity {
     private String Title;
     private String passedDateEditText;
     private String passedDatePickerDate;
-
-
-
-
     private String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     private String[] stringDateArray = stringDate.split("-");
 
@@ -86,8 +90,8 @@ public class ImageViewActivity extends AppCompatActivity {
       Checks to see if date has been passed from PickedDateActivity, if so loads URL with user
       chosen date, if the date is null then it loads the image for today's date.
 
-      Then an object of our getNasaDataJSON class is created and pass the URl we wil use to parse data
-      from which is set to currently load today's date.
+      Then an object of our getNasaDataJSON class is created and passed the URL which we wil use to
+      parse data our data from either current date, or user picked date.
 
       openDatabaseConnection() is called on our dbObject so that the database connection is opened and
       we can save image + data into SavedImage_DB
@@ -119,10 +123,24 @@ public class ImageViewActivity extends AppCompatActivity {
         progBar.setVisibility(View.VISIBLE);
         progBar.setProgress(0);
 
+        //Sets up Toolbar Menu
         toolbar = findViewById(R.id.viewImageToolBarXML);
         toolbar.setTitle(R.string.toolbarTitleImageViewActivity);
-
         setSupportActionBar(toolbar);
+
+        //Sets up NavigationDrawer side menu
+        DrawerLayout drawer = findViewById(R.id.sideMenuDrawerLayoutXML);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.sideNavMenu);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //Without this two statements the navigation menu's menuItems were not responding to clicks events.
+        navigationView.bringToFront();
+        //navigationView.requestLayout();
+
         openDatabaseConnection();
 
         //Todo Maybe extract this to a method later
@@ -173,6 +191,100 @@ public class ImageViewActivity extends AppCompatActivity {
         return true;
     }
 
+    /* onOptionsItemSelected()
+
+       Parameter: MenuItem which is the <item> that was clicked in the toolbar.
+
+       The case statement determines which button/icon was clicked and executes the appropriate action
+
+       Which in this case for ever menu item that isn't the in the over flow menu will navigate to the
+       chosen activity.
+
+       The overflow menu item calls createAlertDialogHelpWindow() which generates the Alert Dialog window
+       to be displayed with the current activity.
+
+     */
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String message = null;
+        //Finds menu items from XML file and handles a case for item selected.
+        switch(item.getItemId())
+        {
+            //what to do when the menu item is selected:
+            case R.id.toolBarMainMenuIcon:
+                message = "You clicked home icon item";
+                break;
+            case R.id.toolBarTodayImageIcon:
+                Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
+                startActivity(imageViewActivity);
+                message = "You clicked on imageViewActivity menu item";
+                break;
+            case R.id.toolBarPickDateIcon:
+                Intent pickDateActivity = new Intent(this, PickDateActivity.class);
+                startActivity(pickDateActivity);
+                message = "You clicked on pickDateActivity menu item";
+                break;
+            case R.id.toolBarSavedImageIcon:
+                Intent savedImagesActivity = new Intent(this, SavedImages.class);
+                startActivity(savedImagesActivity);
+                message = "You clicked on savedImagesActivity menu item";
+                break;
+            case R.id.toolBarOverFlowHelpMenu:
+                createAlertDialogHelpWindow();
+                message = "You clicked on the overFlowHelpMenu menu item two";
+                break;
+        }
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+    /* onNavigationItemSelected()
+
+        Parameter: MenuItem which is the <item> that was clicked in the side menu.
+
+        The case statement determines which button/icon was clicked and executes the appropriate action
+        and sending the user to the correct activity.
+
+
+     */
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        String message = null;
+
+        switch(item.getItemId())
+        {
+            case R.id.sideMenuMainMenuXML:
+                message = "Main Menu item Clicked.";
+                break;
+            case R.id.sideMenuTodayImageXML:
+                message = "sideMenuTodayImageXML item Clicked.";
+                Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
+                startActivity(imageViewActivity);
+                break;
+            case R.id.sideMenuPickDateIconXML:
+                message = "sideMenuPickDateIconXML item Clicked.";
+                Intent pickDateActivity = new Intent(this, PickDateActivity.class);
+                startActivity(pickDateActivity);
+                break;
+            case R.id.sideMenuSavedImagesIconXML:
+                message = "sideMenuSavedImagesIconXML item Clicked.";
+                //this makes the back button on the device return to the first activity.
+                this.finish();
+                Intent savedImagesActivity = new Intent(this, SavedImages.class);
+                startActivity(savedImagesActivity);
+                break;
+
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        return false;
+    }
 
     //Type1  Type2   Type3
     private class getNasaDataJSON extends AsyncTask< String, Integer, String>
@@ -230,7 +342,6 @@ public class ImageViewActivity extends AppCompatActivity {
                         spaceImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
                         outputStream.flush();
                         outputStream.close();
-
 
                         publishProgress(75);
                     }
@@ -413,7 +524,38 @@ public class ImageViewActivity extends AppCompatActivity {
                 .show();
     }
 
-}
+    /* createAlertDialogHelpWindow()
+
+
+       Sets alert_dialog_layout which holds the inflated layout for alert dialog window
+       Create View objects which we will use to set text values.
+       Set Text values for View's.
+       Build alert window via AlertDialog.Builder and display it to the user.
+
+    */
+
+    private void createAlertDialogHelpWindow(){
+
+
+        View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
+
+        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+        TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
+        TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
+
+        title.setText(R.string.helpMenuTitle);
+        paragraphOne.setText(R.string.helpParagraphOne);
+        paragraphTwo.setText(R.string.helpParagraphTwo);
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle(R.string.helpMenuDialogTitleImageViewActivity);
+        alertBuilder.setView(alert_dialog_layout);
+        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.create().show();
+    }
+
+
+}//end of File
 
 
 

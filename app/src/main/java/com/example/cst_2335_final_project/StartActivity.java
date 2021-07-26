@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE = 100;
+    public static final int ACTIVITY_REQUEST_CODE = 100;
 
 
     private Button startBtn;

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView android:id="@+id/helpMenuIconXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/info_icon"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/helpMenuTitleXMl"
+        />
+
+    <TextView android:id="@+id/helpMenuTitleXMl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="25dp"
+        android:text="@string/helpMenuTitle"        />
+
+    <TextView android:id="@+id/helpMenuItemOneXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/helpMenuTitleXMl"
+        android:padding="12dp"
+        android:text="@string/helpParagraphOne"      />
+
+    <TextView android:id="@+id/helpMenuItemTwoXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/helpMenuItemOneXML"
+        android:padding="12dp"
+        android:text="@string/helpParagraphTwo"       />
+
+</RelativeLayout>

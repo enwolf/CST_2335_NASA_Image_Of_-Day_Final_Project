@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".SavedImages">
+
+    <androidx.appcompat.widget.Toolbar  android:id="@+id/savedImagesToolBarXML"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/white"
+        android:background="@color/lightBlack"       />
+
+    <androidx.drawerlayout.widget.DrawerLayout  android:id="@+id/sideMenuDrawerLayoutXML"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+    <com.google.android.material.navigation.NavigationView android:id="@+id/sideNavMenu"
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@color/lightBlack"
+        app:headerLayout="@layout/side_menu_header_layout"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/navigation_drawer_side_menu_layout" />
 
 
     <ListView android:id="@+id/savedImageListViewXML"
@@ -16,9 +42,9 @@
         />
 
 
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
 
 
-
-</RelativeLayout>
+</LinearLayout>
