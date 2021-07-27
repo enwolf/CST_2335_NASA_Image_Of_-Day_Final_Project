@@ -17,4 +17,10 @@
         <item name="windowNoTitle">true</item>
 
     </style>
+
+    <!-- Style to set toolbar text size  -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">10dp</item>
+    </style>
+
 </resources>

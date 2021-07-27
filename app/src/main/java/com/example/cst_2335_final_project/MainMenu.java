@@ -1,6 +1,5 @@
 package com.example.cst_2335_final_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,35 +15,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class PickDateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
-    public static final int ACTIVITY_REQUEST_CODE = 200;
-    private String datePickerDate;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_date);
+        setContentView(R.layout.activity_main_menu);
+        Button todayBtn = findViewById(R.id.viewTodayImageMainMenuBtnXML);
+        Button PickDateBtn = findViewById(R.id.pickDateMainMenuBtnXML);
+        Button SavedImageBtn = findViewById(R.id.savedImagesMainMenuBtnXML);
 
-        Intent nextActivity = new Intent(this, ImageViewActivity.class);
-
-        //link java objects to xml views
-        EditText enteredDate = findViewById(R.id.pickDateEditTextXML);
-        Button viewTodayImageBtn = findViewById(R.id.enteredDateEditTextButton);
-        Button datePickButton = findViewById(R.id.enteredPickedDateButtonXML);
-        DatePicker datePicker = findViewById(R.id.datePickerXML);
 
         //Sets up Toolbar Menu
-        toolbar = findViewById(R.id.pickedDateToolBarXML);
-        toolbar.setTitle(R.string.toolbarTitleDatePickerActivity);
+        toolbar = findViewById(R.id.mainMenuToolbar);
+        toolbar.setTitle(R.string.toolbarTitleMainMenuActivity);
         setSupportActionBar(toolbar);
 
         //Sets up NavigationDrawer side menu
@@ -58,20 +49,17 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         //Without this two statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-        viewTodayImageBtn.setOnClickListener(Click -> {
 
-            String editTextValue = enteredDate.getText().toString();
-            nextActivity.putExtra("date",editTextValue);
-            startActivity(nextActivity);
 
-        });
 
-        datePickButton.setOnClickListener(Click -> {
+        Intent nextActivity = new Intent(this, ImageViewActivity.class);
+        todayBtn.setOnClickListener(click -> startActivity(nextActivity));
 
-            startActivity(ReadyDataPickerIntent(nextActivity,datePicker));
-            Toast.makeText(this, datePickerDate, Toast.LENGTH_SHORT).show();
+        Intent pickedDateActivity = new Intent(this, PickDateActivity.class);
+        PickDateBtn.setOnClickListener(click -> startActivity(pickedDateActivity));
 
-        });
+        Intent savedActivity = new Intent(this, SavedImages.class);
+        SavedImageBtn.setOnClickListener(click -> startActivity(savedActivity));
 
     }
 
@@ -84,7 +72,7 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-   /* onOptionsItemSelected()
+    /* onOptionsItemSelected()
 
        Parameter: MenuItem which is the <item> that was clicked in the toolbar.
 
@@ -135,8 +123,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-
-
     /* onNavigationItemSelected()
 
         Parameter: MenuItem which is the <item> that was clicked in the side menu.
@@ -149,7 +135,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         String message = null;
 
         switch(item.getItemId())
@@ -183,71 +168,9 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         drawerLayout.closeDrawer(GravityCompat.START);
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-
         return false;
     }
 
-
-
-    /* ReadyDataPickerIntent()
-
-       @Para Intent intent the intent object we will be adding extra's to and returning.
-       @Para DatePicker datePicker object from which we will extract year/month/day data selected by the users.
-
-       String year hold year returned from datePicker
-       String month hold month returned from datePicker
-       String dat hold dat returned from datePicker
-
-       Formats month to account for 0-11 indexing of month values, and adds leading 0 if month is < 10.
-       Formats Day to add leading zeros if day is < 10.
-
-       Concatenates year + month + date with - to get the string we will pass into our URL in the next activity.
-       passes datePickerDate, year, monty, day as extra and packages with intent.
-       returns the intent with included extra's
-
-     */
-
-
-    private Intent ReadyDataPickerIntent (Intent intent, DatePicker datePicker) {
-
-        String year;
-        String month;
-        String day;
-
-        year = String.valueOf(datePicker.getYear());
-
-        if (datePicker.getMonth() < 10)
-            month = "0" + (datePicker.getMonth() + 1);
-        else
-            month = String.valueOf(datePicker.getMonth() + 1);
-
-        if (datePicker.getDayOfMonth() < 10)
-            day = "0" + datePicker.getDayOfMonth();
-        else
-            day = String.valueOf(datePicker.getDayOfMonth());
-
-        datePickerDate = year + "-" + month + "-" + day;
-
-        intent.putExtra("datePickerDate", datePickerDate);
-        intent.putExtra("year", year);
-        intent.putExtra("month", month);
-        intent.putExtra("day", day);
-
-        return intent;
-    }
-
-
-
-
-    /* createAlertDialogHelpWindow()
-
-
-       Sets alert_dialog_layout which holds the inflated layout for alert dialog window
-       Create View objects which we will use to set text values.
-       Set Text values for View's.
-       Build alert window via AlertDialog.Builder and display it to the user.
-
-    */
 
     private void createAlertDialogHelpWindow(){
 
@@ -257,17 +180,19 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
+        TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
         title.setText(R.string.helpMenuTitle);
-        paragraphOne.setText(R.string.pickedDateHelpMenuParaOne);
-        paragraphTwo.setText(R.string.pickedDateHelpMenuParaTwo);
+        paragraphOne.setText(R.string.mainMenuHelpMenuParaOne);
+        paragraphTwo.setText(R.string.mainMenuHelpMenuParaTwo);
+        paragraphThree.setText((R.string.mainMenuHelpMenuParaThree));
+
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.datePickerHelpMenuDialogTitle);
+        alertBuilder.setTitle(R.string.mainMenuHelpMenuDialogTitle);
         alertBuilder.setView(alert_dialog_layout);
         alertBuilder.setNegativeButton("Close", (click, arg) -> { });
         alertBuilder.create().show();
     }
-
 
 }
