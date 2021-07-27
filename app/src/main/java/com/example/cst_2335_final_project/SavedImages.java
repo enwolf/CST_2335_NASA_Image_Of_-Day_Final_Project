@@ -103,16 +103,7 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         navigationView.bringToFront();
 
 
-
-
         loadDataFromDatabase();
-
-
-
-
-
-
-
 
 
         listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> {
@@ -160,6 +151,8 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         {
             //what to do when the menu item is selected:
             case R.id.toolBarMainMenuIcon:
+                Intent mainMenu = new Intent(this, MainMenu.class);
+                startActivity(mainMenu);
                 message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
@@ -207,6 +200,8 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         switch(item.getItemId())
         {
             case R.id.sideMenuMainMenuXML:
+                Intent mainMenu = new Intent(this, MainMenu.class);
+                startActivity(mainMenu);
                 message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
@@ -608,11 +603,11 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
 
         title.setText(R.string.helpMenuTitle);
-        paragraphOne.setText(R.string.helpParagraphOne);
-        paragraphTwo.setText(R.string.helpParagraphTwo);
+        paragraphOne.setText(R.string.savedImageHelpMenuParaOne);
+        paragraphTwo.setText(R.string.savedImageHelpMenuParaTwo);
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.helpMenuDialogTitleImageViewActivity);
+        alertBuilder.setTitle(R.string.savedImageHelpMenuDialogTitle);
         alertBuilder.setView(alert_dialog_layout);
         alertBuilder.setNegativeButton("Close", (click, arg) -> { });
         alertBuilder.create().show();

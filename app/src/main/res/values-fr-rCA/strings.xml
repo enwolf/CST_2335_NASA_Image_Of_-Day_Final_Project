@@ -1,0 +1,76 @@
+<resources>
+
+    <string name="app_name">CST_2335_Final_Project</string>
+
+    <!--   Start Activity Strings      -->
+    <string name="startTitleTextString">NASA Image de la Date</string>
+    <string name="startBtnTextString">Cliquez pour démarrer!</string>
+
+
+    <!--   Main Menu Activity Strings      -->
+    <string name="toolbarTitleMainMenuActivity">Menu principal v2.0</string>
+    <string name="mainMenuTitle">Menu principal</string>
+    <string name="mainMenuTodaysImageBtnText">Voir l\'image d\'aujourd\'hui</string>
+    <string name="mainMenuPickDateBtnText">Sélectionnez la date pour voir l\'image</string>
+    <string name="mainMenuSavedImagesBtnText">Afficher les images enregistrées</string>
+
+    <!--   Main Menu Activity Help Menu    -->
+    <string name="mainMenuHelpMenuDialogTitle">Menu principal</string>
+    <string name="mainMenuHelpMenuParaOne">Bouton Image d\'aujourd\'hui: amène l\'utilisateur à l\'activité de visualisation d\'images et affiche l\'image pour la date actuelle.</string>
+    <string name="mainMenuHelpMenuParaTwo">Bouton de sélection de date: amène l\'utilisateur à sélectionner l\'activité de date.</string>
+    <string name="mainMenuHelpMenuParaThree">Bouton d\'image enregistrée: amène l\'utilisateur à l\'activité d\'images enregistrées.</string>
+
+    <!--   Image View Activity Strings  -->
+    <string name="toolbarTitleImageViewActivity">Affichage des images v2.0</string>
+    <string name="DateTitleString">Date:</string>
+    <string name="urlTitleString">URL: </string>
+    <string name="expTitleString">Explication:</string>
+    <string name="hdUrlBtnString">Voir l\'image HD</string>
+    <string name="snackbarMessage">Ajouté à la liste ImageData favorite.</string>
+    <string name="snackbarCallToAction">Voir les favoris maintenant!</string>
+    <string name="saveImageBtn">Enregistrer l\'image</string>
+
+    <!--   Image View Activity Help Menu  -->
+    <string name="imageViewHelpMenuDialogTitle">Activité de la visionneuse d\'images</string>
+    <string name="imageViewHelpMenuParaOne">Explication de l\'image: Le texte peut défiler s\'il ne tient pas sur l\'écran.</string>
+    <string name="imageViewHelpMenuParaTwo">Bouton Afficher l\'image HD: lorsque ce bouton est cliqué, il ouvre le navigateur par défaut et affiche l\'image HD à l\'intérieur.</string>
+    <string name="imageViewHelpMenuParaThree">Bouton Enregistrer l\'image: lorsque vous cliquez sur ce bouton, l\'image actuelle et ses données sont enregistrées dans la mémoire de l\'application.</string>
+
+    <!--   Pick Date Activity Strings  -->
+    <string name="toolbarTitleDatePickerActivity">Sélecteur de date v2.0</string>
+
+    <!--   Pick Date Activity View Activity Help Menu  -->
+    <string name="datePickerHelpMenuDialogTitle">Activité du sélecteur de date</string>
+    <string name="pickedDateHelpMenuParaOne">Bouton Afficher la date sélectionnée: lorsque vous cliquez dessus, cela chargera l\'activité Afficher l\'image et chargera l\'image pour la date sélectionnée.</string>
+    <string name="pickedDateHelpMenuParaTwo">Cliquez pour afficher le bouton: lorsque vous cliquez sur ce bouton, il charge l\'activité d\'image avec la date saisie manuellement par l\'utilisateur. (Format de date: yyyy-mm-dd) </string>
+    <string name="pickedDateHelpMenuParaThree"></string>
+
+    <!--  Saved Images Activity Strings  -->
+    <string name="toolbarTitleSavedImagesActivity">Images enregistrées v2.0</string>
+
+    <!--  Saved Image Activity Help Menu  -->
+    <string name="savedImageHelpMenuDialogTitle">Activité des images enregistrées</string>
+    <string name="savedImageHelpMenuParaOne">Lorsque vous cliquez sur une image, une fenêtre s\'ouvre affichant des informations détaillées sur l\'image enregistrée.</string>
+    <string name="savedImageHelpMenuParaTwo">Lorsqu\'un clic long sur une image ouvre une fenêtre d\'alerte vous demandant si vous souhaitez supprimer cette entrée de la mémoire de l\'application.</string>
+    <string name="savedImageHelpMenuParahree"></string>
+    <!-- ToolBar Strings -->
+    <string name="menuItemOneTitle">Domicile</string>
+    <string name="menuItemTwoTitle">L\'image d\'aujourd\'hui</string>
+    <string name="menuItemThreeTitle">Choisir la date</string>
+    <string name="menuItemFourTitle">Images enregistrées</string>
+    <string name="overflowMenuTitle">Informations | Aider</string>
+
+    <!-- ToolBar Overflow Menu Strings -->
+    <string name="helpMenuTitle">Info</string>
+
+    <!-- drawer frame -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="sideMenuHeaderTitleText">Application Image du jour de la NASA</string>
+    <string name="sideMenuItemOne">Menu principal</string>
+    <string name="sideMenuItemTwo">L\'image d\'aujourd\'hui</string>
+    <string name="sideMenuItemThree">Choisir la date de l\'image</string>
+    <string name="sideMenuItemFour">Liste des images enregistrées</string>
+
+
+</resources>

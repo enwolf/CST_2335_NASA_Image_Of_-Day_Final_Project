@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/info_icon"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/helpMenuTitleXMl"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@id/helpMenuTitleXMl"
         />
 
     <TextView android:id="@+id/helpMenuTitleXMl"
@@ -22,18 +22,26 @@
         android:textSize="25dp"
         android:text="@string/helpMenuTitle"        />
 
+
     <TextView android:id="@+id/helpMenuItemOneXML"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpMenuTitleXMl"
         android:padding="12dp"
-        android:text="@string/helpParagraphOne"      />
+        android:layout_marginBottom="5dp" />
 
     <TextView android:id="@+id/helpMenuItemTwoXML"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpMenuItemOneXML"
         android:padding="12dp"
-        android:text="@string/helpParagraphTwo"       />
+        android:layout_marginBottom="5dp" />
+
+    <TextView android:id="@+id/helpMenuItemThreeXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/helpMenuItemTwoXML"
+        android:padding="12dp"
+        />
 
 </RelativeLayout>

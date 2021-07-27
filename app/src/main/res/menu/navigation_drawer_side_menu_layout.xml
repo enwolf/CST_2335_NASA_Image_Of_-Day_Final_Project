@@ -7,7 +7,7 @@
     <item android:id="@+id/sideMenuMainMenuXML"
 
         android:orderInCategory="10"
-        android:title="Main Menu"
+        android:title="@string/sideMenuItemOne"
         android:icon="@drawable/main_menu_icon"
         app:showAsAction="always"/>
 
@@ -15,21 +15,21 @@
     <item android:id="@+id/sideMenuTodayImageXML"
 
         android:orderInCategory="20"
-        android:title="Todays Image"
+        android:title="@string/sideMenuItemTwo"
         android:icon="@drawable/today_image_icon"
         app:showAsAction="always"/>
 
     <item android:id="@+id/sideMenuPickDateIconXML"
 
         android:orderInCategory="30"
-        android:title="Pick Image Date"
+        android:title="@string/sideMenuItemThree"
         android:icon="@drawable/date_picker_icon"
         app:showAsAction="always"/>
 
     <item android:id="@+id/sideMenuSavedImagesIconXML"
 
         android:orderInCategory="40"
-        android:title="Saved Images List"
+        android:title="@string/sideMenuItemFour"
         android:icon="@drawable/saved_image_icon"
         app:showAsAction="always"/>
 

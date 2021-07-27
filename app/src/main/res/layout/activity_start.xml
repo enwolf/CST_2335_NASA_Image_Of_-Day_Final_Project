@@ -44,7 +44,7 @@
 
         android:layout_below="@id/startMainImage"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
 
 
         android:background="@color/white"
@@ -52,31 +52,7 @@
                                                                 />
 
 
-    <Button android:id="@+id/pickedDateActivityBtn"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/startActivityBtn"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-
-
-        android:background="@color/white"
-        android:text="Pick Date for Image" />
-
-    <Button android:id="@+id/savedActivityBtn"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/pickedDateActivityBtn"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-
-
-        android:background="@color/white"
-        android:text="@string/tempButton" />
 
 
 </RelativeLayout>

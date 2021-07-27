@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@color/white"
-        android:background="@color/lightBlack"       />
+        android:background="@color/lightBlack"
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <androidx.drawerlayout.widget.DrawerLayout  android:id="@+id/sideMenuDrawerLayoutXML"
 
@@ -163,7 +164,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
 
-                android:text="save button"                    />
+                android:text="@string/saveImageBtn"                    />
 
 
 

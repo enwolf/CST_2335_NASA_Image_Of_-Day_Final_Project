@@ -214,6 +214,8 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         {
             //what to do when the menu item is selected:
             case R.id.toolBarMainMenuIcon:
+                Intent mainMenu = new Intent(this, MainMenu.class);
+                startActivity(mainMenu);
                 message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
@@ -257,6 +259,8 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         switch(item.getItemId())
         {
             case R.id.sideMenuMainMenuXML:
+                Intent mainMenu = new Intent(this, MainMenu.class);
+                startActivity(mainMenu);
                 message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
@@ -542,13 +546,15 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
+        TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
         title.setText(R.string.helpMenuTitle);
-        paragraphOne.setText(R.string.helpParagraphOne);
-        paragraphTwo.setText(R.string.helpParagraphTwo);
+        paragraphOne.setText(R.string.imageViewHelpMenuParaOne);
+        paragraphTwo.setText(R.string.imageViewHelpMenuParaTwo);
+        paragraphThree.setText((R.string.imageViewHelpMenuParaThree));
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.helpMenuDialogTitleImageViewActivity);
+        alertBuilder.setTitle(R.string.imageViewHelpMenuDialogTitle);
         alertBuilder.setView(alert_dialog_layout);
         alertBuilder.setNegativeButton("Close", (click, arg) -> { });
         alertBuilder.create().show();
