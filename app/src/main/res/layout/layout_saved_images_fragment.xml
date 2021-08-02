@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ScrollView android:id="@+id/savedImagesFragmentTextContainerXML"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="1dp"
+        android:scrollbarThumbVertical="@color/white" >
+
+        <RelativeLayout android:id="@+id/scrollLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"      >
+
+        <TextView android:id="@+id/savedImagesFragmentTitleXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        <ImageView android:id="@+id/savedImagesFragmentImageViewXML"
+
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_below="@id/savedImagesFragmentTitleXML" />
+
+        <TextView android:id="@+id/savedImagesFragmentExpTextXML"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/white"
+            android:lineSpacingExtra="5dp"
+            android:layout_below="@id/savedImagesFragmentImageViewXML"      />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

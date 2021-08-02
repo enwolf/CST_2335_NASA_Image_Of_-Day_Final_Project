@@ -46,13 +46,35 @@
             android:layout_below="@+id/viewImageToolBarXML" >
 
 
+            <TextView android:id="@+id/imageTitleXML"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:text="@string/imageTitleText"
+                android:textColor="@color/white"
+                />
+
+            <TextView android:id="@+id/imageViewTitleXML"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@id/imageTitleXML"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"            />
+
             <TextView android:id="@+id/dateTitleXML"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="70dp"
-                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="24dp"
+                android:layout_below="@id/imageViewTitleXML"
                 android:text="@string/DateTitleString"
                 android:textColor="@color/white"
                                                             />
@@ -61,11 +83,10 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
-
+                android:layout_below="@+id/imageViewTitleXML"
                 android:layout_toRightOf="@+id/dateTitleXML"
-
                 android:textColor="@color/white"
                                                             />
 
@@ -73,76 +94,65 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_below="@+id/dateTitleXML"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="25dp"
-
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
                 android:text="@string/urlTitleString"
                 android:textColor="@color/white"
                                                             />
 
             <TextView android:id="@+id/urlTextXML"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="25dp"
                 android:layout_toRightOf="@+id/urlTitleXML"
                 android:layout_below="@id/dateTextXML"
                 android:textColor="@color/white"
                                                             />
 
-            <ImageView android:id="@+id/nasaImageContainer"
-
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@id/urlTitleXML"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="50dp"
-                                                            />
-
-
-            <TextView android:id="@+id/expTitleXML"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_below="@id/nasaImageContainer"
-                android:layout_marginTop="20dp"
-                android:layout_centerInParent="true"
-                android:text="@string/expTitleString"
-                android:textColor="@color/white"
-                                                            />
-
-
 
             <ScrollView android:id="@+id/scrollView"
 
-                android:layout_width="400dp"
-                android:layout_height="200dp"
-                android:layout_below="@id/expTitleXML"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/urlTextXML"
                 android:fillViewport="true"
                 android:scrollbars="vertical"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
+                android:scrollbarSize="1dp"
+                android:scrollbarThumbVertical="@color/white"
                 android:layout_centerInParent="true"
-                    >
+                >
 
+                <RelativeLayout android:id="@+id/imageViewScrollContainerXML"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ImageView android:id="@+id/nasaImageContainer"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="8dp"
+                                                            />
 
                 <TextView android:id="@+id/expTextXML"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_below="@id/nasaImageContainer"
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
                     android:paddingBottom="15dp"
-
+                    android:lineSpacingExtra="5dp"
                     android:textColor="@color/white"         />
 
+                </RelativeLayout>
 
             </ScrollView>
-
 
             <Button android:id="@+id/hdUrlButton"
 
@@ -163,7 +173,6 @@
                 android:layout_marginTop="25dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-
                 android:text="@string/saveImageBtn"                    />
 
 
@@ -173,7 +182,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-
                 android:visibility="invisible"                 />
 
 

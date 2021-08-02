@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -52,6 +53,18 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
     //Activity request code for use with onActivityResults.
     public static final int ACTIVITY_REQUEST_CODE = 400;
+
+    // String labels for Bundle Data, used for passing and retrieving stored values
+    public final static String IMAGE_DATA_ID = "ID";
+    public final static String IMAGE_DATA_DATE = "DATE";
+    public final static String IMAGE_DATA_TITLE = "TITLE";
+    public final static String IMAGE_DATA_EXPLANATION = "EXPLANATION";
+    public final static String IMAGE_DATA_URL = "URL";
+    public final static String IMAGE_DATA_HD_URL = "HD_URL";
+    public final static String IMAGE_DATA_FILENAME = "FILENAME";
+    public final static String IMAGE_DATA_IMAGE_FILE_PATH = "FILEPATH";
+
+
     private SQLiteDatabase dbObject;
     private ArrayList<ImageData> imageDataArrayList = new ArrayList<>(Arrays.asList());
     private ArrayListAdapter imageDataArrayListAdapter;
@@ -67,8 +80,8 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
        Links listView with view in xml layout file then attach imageDataArrayListAdapter to the list view
        The we call loadDataFromDatabase() to populate any saved data into our listview.
        Set setOnItemClickListener and setOnItemLongClickListener to listview and depending on the type of click
-       creates the correct Alert Dialog in response. A long click will load the create alert dialog to
-       delete item from database/listViewArray and a short click will display ImageData Objects details.
+       creates the correct Alert Dialog or loads a fragment in response. A long click will load the create alert dialog to
+       delete item from database/listViewArray and a short click will display ImageData Objects details in a fragment..
 
 
     */
@@ -82,6 +95,11 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         imageDataArrayListAdapter  = new ArrayListAdapter();
         dirPath = new File(getCacheDir(), "imageFolder");
+
+        Log.i("Test dirPath ", dirPath.toString());
+        Log.i("Test dirPath ", dirPath.getAbsolutePath());
+
+
 
         ListView listViewImageData = findViewById(R.id.savedImageListViewXML);
         listViewImageData.setAdapter(imageDataArrayListAdapter);
@@ -107,7 +125,11 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
 
         listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> {
-            createItemDetailAlertDialog(indexOfElement);
+
+            //this is where we will open our fragment.
+            createFragment(indexOfElement);
+
+            //createItemDetailAlertDialog(indexOfElement);
         });
 
 
@@ -119,6 +141,61 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
 
     }
+
+    /* createFragment()
+
+       Parameter: int indexOfElement, the index of the element clicked/pressed on in the ListView
+                  used to retrieve data values of ImageData Object at this index.
+
+       Creates Bundle object dataToSend, which stores values as a key/value item. we use the class
+       wide string variables as our key/label's and the specific ImageDate Objects values.
+
+       Creates intent for the activity which will load the fragment in its FrameLayout, and includes
+       the bundle object as an extra to be sent.
+
+     */
+
+
+    private void createFragment(int indexOfElement){
+
+        Bundle dataToSend = new Bundle();
+
+        dataToSend.putLong(IMAGE_DATA_ID,  imageDataArrayList.get(indexOfElement).getId());
+        dataToSend.putString(IMAGE_DATA_DATE,  imageDataArrayList.get(indexOfElement).getDate());
+        dataToSend.putString(IMAGE_DATA_TITLE,  imageDataArrayList.get(indexOfElement).getTitle());
+        dataToSend.putString(IMAGE_DATA_EXPLANATION,  imageDataArrayList.get(indexOfElement).getExplanation());
+        dataToSend.putString(IMAGE_DATA_URL,  imageDataArrayList.get(indexOfElement).getUrlString());
+        dataToSend.putString(IMAGE_DATA_HD_URL,  imageDataArrayList.get(indexOfElement).getHdUrlString());
+        dataToSend.putString(IMAGE_DATA_FILENAME,  imageDataArrayList.get(indexOfElement).getFileName());
+        dataToSend.putString(IMAGE_DATA_IMAGE_FILE_PATH,  dirPath.toString());
+
+
+        /*
+        if(isTablet){
+
+            detailsPaneFragment = new DetailsFragment();
+            detailsPaneFragment.setArguments(msgDataToSend);
+
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayoutFragment, detailsPaneFragment)
+                    .commit();
+        }else{
+
+        }
+
+        */
+
+
+            Intent savedImagesFragmentActivity  = new Intent(SavedImages.this, SaveImagesFragmentActivity.class);
+            savedImagesFragmentActivity.putExtras(dataToSend);
+            startActivity(savedImagesFragmentActivity);
+
+
+
+    }
+
+
 
     // Inflate the menu items for use in the action bar
     @Override
@@ -293,12 +370,12 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             //Link View with XML
             TextView titleText = (TextView) newView.findViewById(R.id.listViewLayoutTitleXML);
             TextView dateText  = (TextView) newView.findViewById(R.id.listViewLayoutDateXML);
-            TextView urlText =  (TextView) newView.findViewById(R.id.listViewLayoutUrlXML);
+
 
             //Set Text values
             titleText.setText(currentImageDataObject.getTitle());
             dateText.setText(currentImageDataObject.getDate());
-            urlText.setText(currentImageDataObject.getUrlString());
+
 
             //load saved image
             loadImageFromDirectoryIntoView(newView, fileName, dirPath);
@@ -612,6 +689,9 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         alertBuilder.setNegativeButton("Close", (click, arg) -> { });
         alertBuilder.create().show();
     }
+
+
+
 
 
 

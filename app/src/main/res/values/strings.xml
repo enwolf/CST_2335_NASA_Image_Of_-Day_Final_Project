@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">CST_2335_Final_Project</string>
+    <string name="app_name">Image of the Date</string>
 
     <!--   Start Activity Strings      -->
-    <string name="startTitleTextString">NASA Image Of The Date</string>
+    <string name="startTitleTextString">NASA Image of the Date</string>
     <string name="startBtnTextString">Click to Start!</string>
 
 
@@ -21,15 +21,11 @@
     <string name="mainMenuHelpMenuParaThree">Saved Image Button: Brings user to saved Images Activity.</string>
 
 
-    Pick Date Button: Brings the user to Pick Date Activity.
-
-    Saved Image Button: Brings user to saved Images Activity.
-
-
     <!--   Image View Activity Strings  -->
     <string name="toolbarTitleImageViewActivity">Image View v2.0</string>
+    <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
-    <string name="urlTitleString">URL: </string>
+    <string name="urlTitleString">URL:</string>
     <string name="expTitleString">Explanation: </string>
     <string name="hdUrlBtnString">View HD Image </string>
     <string name="snackbarMessage">Added to favorite ImageData list. </string>
@@ -72,15 +68,15 @@
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
 
-
     <!-- drawer frame -->
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="sideMenuHeaderTitleText">NASA Image of the Day App</string>
+    <string name="sideMenuHeaderTitleText">NASA Image of the Date</string>
     <string name="sideMenuItemOne">Main Menu</string>
     <string name="sideMenuItemTwo">Today\'s Image</string>
     <string name="sideMenuItemThree">Pick Image Date</string>
     <string name="sideMenuItemFour">Saved Images List</string>
+
 
 
 </resources>

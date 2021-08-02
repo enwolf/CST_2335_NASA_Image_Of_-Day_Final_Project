@@ -58,6 +58,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     private TextView viewExp;
     private TextView viewURL;
     private TextView viewDate;
+    private TextView viewTitle;
     private ImageView viewImage;
     private Button openHD_URL_Btn;
     private Button saveBtn;
@@ -113,8 +114,10 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_image_view);
 
         openHD_URL_Btn = findViewById(R.id.hdUrlButton);
+
         viewImage = findViewById(R.id.nasaImageContainer);
         progBar   = findViewById(R.id.viewActivityProBar);
+        viewTitle = findViewById(R.id.imageViewTitleXML);
         viewDate  = findViewById(R.id.dateTextXML);
         viewURL   = findViewById(R.id.urlTextXML);
         viewExp   = findViewById(R.id.expTextXML);
@@ -137,9 +140,9 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.sideNavMenu);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Without this two statements the navigation menu's menuItems were not responding to clicks events.
+        //Without this  statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
-        //navigationView.requestLayout();
+
 
         openDatabaseConnection();
 
@@ -175,7 +178,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         Log.i("Test Date", "Month = " + stringDateArray[1]);
         Log.i("Test Date", "Day = " + stringDateArray[2]);
         Log.i("Test Date", stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-        Log.i("Test Date", "Todays Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+        Log.i("Test Date", "Today's Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
 
 
         openHD_URL_Btn.setOnClickListener(Click -> startActivity(openBrowser) );
@@ -373,6 +376,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
                 viewURL.setText(URLPath);
                 viewExp.setText(Explanation);
                 viewImage.setImageBitmap(spaceImage);
+                viewTitle.setText(Title);
 
                 progBar.setVisibility(View.INVISIBLE);
 
