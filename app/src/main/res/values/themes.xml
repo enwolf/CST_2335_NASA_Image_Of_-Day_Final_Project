@@ -23,4 +23,11 @@
         <item name="android:textSize">10dp</item>
     </style>
 
+    <style name="DatePickerTheme" >
+        <!-- Text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Divider color -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
 </resources>

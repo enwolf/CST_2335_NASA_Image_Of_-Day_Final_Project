@@ -296,92 +296,92 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     //Type1  Type2   Type3
     private class getNasaDataJSON extends AsyncTask< String, Integer, String>
     {
-           //Type1
-            public String doInBackground(String ... args) {
-                try {
+        //Type1
+        public String doInBackground(String ... args) {
+            try {
 
-                    //create a URL object of what server to contact:
-                    URL url = new URL(args[0]);
+                //create a URL object of what server to contact:
+                URL url = new URL(args[0]);
 
-                    JSONObject reportJSON = createObjectJSON(url);
+                JSONObject reportJSON = createObjectJSON(url);
 
-                    Date = reportJSON.getString("date");
-                    publishProgress(25);
-                    URLPath = reportJSON.getString("url");
+                Date = reportJSON.getString("date");
+                publishProgress(25);
+                URLPath = reportJSON.getString("url");
 
-                    Explanation = reportJSON.getString("explanation");
-                    urlHdPath = reportJSON.getString("hdurl");
-                    Title = reportJSON.getString("title");
+                Explanation = reportJSON.getString("explanation");
+                urlHdPath = reportJSON.getString("hdurl");
+                Title = reportJSON.getString("title");
 
-                    Log.i("Test URL PATH", "Value of HD URL PATH = " + urlHdPath);
-                    publishProgress(50);
+                Log.i("Test URL PATH", "Value of HD URL PATH = " + urlHdPath);
+                publishProgress(50);
 
-                    FileNameWithExtension = URLPath.substring(URLPath.lastIndexOf('/') + 1, URLPath.length());
-                    FileNameWithoutExtension = FileNameWithExtension.substring(0, FileNameWithExtension.lastIndexOf('.'));
+                FileNameWithExtension = URLPath.substring(URLPath.lastIndexOf('/') + 1, URLPath.length());
+                FileNameWithoutExtension = FileNameWithExtension.substring(0, FileNameWithExtension.lastIndexOf('.'));
 
-                    //sets url for intent object to load webpage in browser of HD image.
-                    openBrowser.setData(Uri.parse(urlHdPath));
+                //sets url for intent object to load webpage in browser of HD image.
+                openBrowser.setData(Uri.parse(urlHdPath));
 
-                    URL urlObject = new URL(URLPath);
-                    //String testSplit = urlObject.getPath();
+                URL urlObject = new URL(URLPath);
+                //String testSplit = urlObject.getPath();
 
-                    Log.i("ImageViewActivity", "explanation text: " + Explanation);
+                Log.i("ImageViewActivity", "explanation text: " + Explanation);
 
-                    Log.i("URL TEST", "URL String path = " + URLPath);
-                    Log.i("URL TEST", "URL getFile() = " + urlObject.getFile());
-                    Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
+                Log.i("URL TEST", "URL String path = " + URLPath);
+                Log.i("URL TEST", "URL getFile() = " + urlObject.getFile());
+                Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
 
-                    Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
-                    Log.i("FileWithExtension", "Path = " + FileNameWithExtension);
-                    Log.i("FileWithoutExtension", "Path = " + FileNameWithoutExtension);
+                Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
+                Log.i("FileWithExtension", "Path = " + FileNameWithExtension);
+                Log.i("FileWithoutExtension", "Path = " + FileNameWithoutExtension);
 
-                    FileName = FileNameWithoutExtension + ".png";
+                FileName = FileNameWithoutExtension + ".png";
 
-                    URL imageDataURL = new URL(URLPath);
-                    HttpURLConnection connectionImage = (HttpURLConnection) imageDataURL.openConnection();
-                    connectionImage.connect();
-                    int responseCode = connectionImage.getResponseCode();
+                URL imageDataURL = new URL(URLPath);
+                HttpURLConnection connectionImage = (HttpURLConnection) imageDataURL.openConnection();
+                connectionImage.connect();
+                int responseCode = connectionImage.getResponseCode();
 
-                    if (responseCode == 200) {
+                if (responseCode == 200) {
 
-                        spaceImage = BitmapFactory.decodeStream(connectionImage.getInputStream());
-                        FileOutputStream outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
-                        spaceImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
+                    spaceImage = BitmapFactory.decodeStream(connectionImage.getInputStream());
+                    FileOutputStream outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+                    spaceImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
 
-                        publishProgress(75);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    publishProgress(75);
                 }
-                publishProgress(100);
-              return "Complete";
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-                //Type 2
-            public void onProgressUpdate(Integer ... args)
-            {
-                progBar.setVisibility(args[0]);
-            }
-            //Type3
-            public void onPostExecute(String fromDoInBackground)
-            {
-                Log.i("HTTP", fromDoInBackground);
-
-                viewDate.setText(Date);
-                viewURL.setText(URLPath);
-                viewExp.setText(Explanation);
-                viewImage.setImageBitmap(spaceImage);
-                viewTitle.setText(Title);
-
-                progBar.setVisibility(View.INVISIBLE);
-
-            }
+            publishProgress(100);
+            return "Complete";
         }
+
+        //Type 2
+        public void onProgressUpdate(Integer ... args)
+        {
+            progBar.setVisibility(args[0]);
+        }
+        //Type3
+        public void onPostExecute(String fromDoInBackground)
+        {
+            Log.i("HTTP", fromDoInBackground);
+
+            viewDate.setText(Date);
+            viewURL.setText(URLPath);
+            viewExp.setText(Explanation);
+            viewImage.setImageBitmap(spaceImage);
+            viewTitle.setText(Title);
+
+            progBar.setVisibility(View.INVISIBLE);
+
+        }
+    }
 
     /*  createObjectJSON()
 
@@ -409,27 +409,27 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
     public JSONObject createObjectJSON(URL url) throws IOException, JSONException {
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream urlResponse = urlConnection.getInputStream();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        InputStream urlResponse = urlConnection.getInputStream();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlResponse, "UTF-8"), 8);
-            StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlResponse, "UTF-8"), 8);
+        StringBuilder stringBuilder = new StringBuilder();
 
-            String currentLine = null;
+        String currentLine = null;
 
-            while ((currentLine = bufferedReader.readLine()) != null)
-            {
-                stringBuilder.append(currentLine + "\n");
-                Log.i("createObjectJSON()", "CurrentLine: " + currentLine) ;
-            }
-
-            String result = stringBuilder.toString();
-
-            JSONObject reportJSON = new JSONObject(result);
-
-            return reportJSON;
-
+        while ((currentLine = bufferedReader.readLine()) != null)
+        {
+            stringBuilder.append(currentLine + "\n");
+            Log.i("createObjectJSON()", "CurrentLine: " + currentLine) ;
         }
+
+        String result = stringBuilder.toString();
+
+        JSONObject reportJSON = new JSONObject(result);
+
+        return reportJSON;
+
+    }
 
     /*  openDatabaseConnection()
 
@@ -566,7 +566,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
 
 }//end of File
-
 
 
 

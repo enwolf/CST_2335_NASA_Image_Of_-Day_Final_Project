@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
-    >
+    android:background="@color/black"   >
 
    <androidx.appcompat.widget.Toolbar  android:id="@+id/pickedDateToolBarXML"
 
@@ -36,83 +35,78 @@
             app:menu="@menu/navigation_drawer_side_menu_layout" />
 
 
-
         <RelativeLayout android:id="@+id/innerRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/viewImageToolBarXML" >
+            android:layout_below="@+id/viewImageToolBarXML"
+            android:background="@drawable/background_activity_image">
 
-    <TextView android:id="@+id/pickDateHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
-        android:text="Select Date to View Image"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        />
+            <TextView android:id="@+id/pickDateHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:text="Select Date to View Image"
+                android:textColor="@color/white"
+                android:textSize="30dp"  />
 
-    <DatePicker android:id="@+id/datePickerXML"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/pickDateHeader"
-        android:datePickerMode="spinner"
-        android:layout_centerInParent="true"
+            <DatePicker android:id="@+id/datePickerXML"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/pickDateHeader"
+                android:datePickerMode="spinner"
+                android:layout_centerInParent="true"
+                android:theme="@style/DatePickerTheme"
 
-        android:background="@color/darkGray"
-        android:calendarViewShown="false"
-        android:layout_marginTop="50dp"
+                android:calendarViewShown="false"
+                android:layout_marginTop="50dp"  />
 
-        />
+            <Button android:id="@+id/enteredPickedDateButtonXML"
 
-    <TextView android:id="@+id/pickDateTitleXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Date of Image to view"
-        android:textColor="@color/white"
-        android:layout_centerInParent="true"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/datePickerXML"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:text="View Selected Date"  />
 
-        android:layout_above="@+id/pickDateEditTextXML" />
+            <TextView android:id="@+id/pickDateTitleXML"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Date of Image to view"
+                android:textSize="25dp"
+                android:textColor="@color/white"
 
-
-    <EditText android:id="@+id/pickDateEditTextXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Format: yyyy-mm-dd"
-        android:background="@color/cardview_light_background"
-
-        android:layout_centerInParent="true"
-
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:layout_above="@id/enteredDateEditTextButton"
-        />
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:layout_above="@+id/pickDateEditTextXML" />
 
 
-    <Button android:id="@+id/enteredDateEditTextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+            <EditText android:id="@+id/pickDateEditTextXML"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Format: yyyy-mm-dd"
+                android:background="@color/lightBlack"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
 
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:text="Click to view"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:layout_above="@id/enteredDateEditTextButton"    />
 
-        />
+            <Button android:id="@+id/enteredDateEditTextButton"
 
-    <Button android:id="@+id/enteredPickedDateButtonXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
 
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:text="View Selected Date"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:text="Click to view" />
 
-        />
         </RelativeLayout>
-
     </androidx.drawerlayout.widget.DrawerLayout>
-
 </LinearLayout>
