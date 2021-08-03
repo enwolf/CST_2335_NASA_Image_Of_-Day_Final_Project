@@ -8,7 +8,7 @@
 
 
     <!--   Main Menu Activity Strings      -->
-    <string name="toolbarTitleMainMenuActivity">Main Menu v2.0</string>
+    <string name="toolbarTitleMainMenuActivity">Main Menu v3.0</string>
     <string name="mainMenuTitle">Main Menu</string>
     <string name="mainMenuTodaysImageBtnText">View Today\'s Image</string>
     <string name="mainMenuPickDateBtnText">Select Date to View Image</string>
@@ -22,7 +22,7 @@
 
 
     <!--   Image View Activity Strings  -->
-    <string name="toolbarTitleImageViewActivity">Image View v2.0</string>
+    <string name="toolbarTitleImageViewActivity">Image View v3.0</string>
     <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL:</string>
@@ -40,7 +40,7 @@
 
 
     <!--   Pick Date Activity Strings  -->
-    <string name="toolbarTitleDatePickerActivity">DatePicker v2.0</string>
+    <string name="toolbarTitleDatePickerActivity">DatePicker v3.0</string>
 
     <!--   Pick Date Activity View Activity Help Menu  -->
     <string name="datePickerHelpMenuDialogTitle">Date Picker Activity</string>
@@ -49,7 +49,7 @@
     <string name="pickedDateHelpMenuParaThree"></string>
 
     <!--  Saved Images Activity Strings  -->
-    <string name="toolbarTitleSavedImagesActivity">Saved Images v2.0</string>
+    <string name="toolbarTitleSavedImagesActivity">Saved Images v3.0</string>
 
 
     <!--  Saved Image Activity Help Menu  -->

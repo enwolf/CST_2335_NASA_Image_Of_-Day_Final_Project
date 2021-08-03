@@ -8,7 +8,7 @@
 
 
     <!--   Main Menu Activity Strings      -->
-    <string name="toolbarTitleMainMenuActivity">Menu principal v2.0</string>
+    <string name="toolbarTitleMainMenuActivity">Menu principal v3.0</string>
     <string name="mainMenuTitle">Menu principal</string>
     <string name="mainMenuTodaysImageBtnText">Voir l\'image d\'aujourd\'hui</string>
     <string name="mainMenuPickDateBtnText">Sélectionnez la date pour voir l\'image</string>
@@ -21,7 +21,7 @@
     <string name="mainMenuHelpMenuParaThree">Bouton d\'image enregistrée: amène l\'utilisateur à l\'activité d\'images enregistrées.</string>
 
     <!--   Image View Activity Strings  -->
-    <string name="toolbarTitleImageViewActivity">Affichage des images v2.0</string>
+    <string name="toolbarTitleImageViewActivity">Affichage des images v3.0</string>
     <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL: </string>
@@ -38,7 +38,7 @@
     <string name="imageViewHelpMenuParaThree">Bouton Enregistrer l\'image: lorsque vous cliquez sur ce bouton, l\'image actuelle et ses données sont enregistrées dans la mémoire de l\'application.</string>
 
     <!--   Pick Date Activity Strings  -->
-    <string name="toolbarTitleDatePickerActivity">Sélecteur de date v2.0</string>
+    <string name="toolbarTitleDatePickerActivity">Sélecteur de date v3.0</string>
 
     <!--   Pick Date Activity View Activity Help Menu  -->
     <string name="datePickerHelpMenuDialogTitle">Activité du sélecteur de date</string>
@@ -47,7 +47,7 @@
     <string name="pickedDateHelpMenuParaThree"></string>
 
     <!--  Saved Images Activity Strings  -->
-    <string name="toolbarTitleSavedImagesActivity">Images enregistrées v2.0</string>
+    <string name="toolbarTitleSavedImagesActivity">Images enregistrées v3.0</string>
 
     <!--  Saved Image Activity Help Menu  -->
     <string name="savedImageHelpMenuDialogTitle">Activité des images enregistrées</string>
