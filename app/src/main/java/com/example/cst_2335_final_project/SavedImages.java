@@ -64,7 +64,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
     public final static String IMAGE_DATA_FILENAME = "FILENAME";
     public final static String IMAGE_DATA_IMAGE_FILE_PATH = "FILEPATH";
 
-
     private SQLiteDatabase dbObject;
     private ArrayList<ImageData> imageDataArrayList = new ArrayList<>(Arrays.asList());
     private ArrayListAdapter imageDataArrayListAdapter;
@@ -81,8 +80,7 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
        The we call loadDataFromDatabase() to populate any saved data into our listview.
        Set setOnItemClickListener and setOnItemLongClickListener to listview and depending on the type of click
        creates the correct Alert Dialog or loads a fragment in response. A long click will load the create alert dialog to
-       delete item from database/listViewArray and a short click will display ImageData Objects details in a fragment..
-
+       delete item from database/listViewArray and a short click will display ImageData Objects details in a fragment.
 
     */
 
@@ -98,8 +96,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         Log.i("Test dirPath ", dirPath.toString());
         Log.i("Test dirPath ", dirPath.getAbsolutePath());
-
-
 
         ListView listViewImageData = findViewById(R.id.savedImageListViewXML);
         listViewImageData.setAdapter(imageDataArrayListAdapter);
@@ -120,18 +116,11 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         //Without this two statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-
         loadDataFromDatabase();
 
+        //The method called on click event creates a fragment based object stored at index value.
 
-        listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> {
-
-            //this is where we will open our fragment.
-            createFragment(indexOfElement);
-
-            //createItemDetailAlertDialog(indexOfElement);
-        });
-
+        listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> { createFragment(indexOfElement);  });
 
         listViewImageData.setOnItemLongClickListener( (AdapterView, View, indexOfElement, databaseID) -> {
             createDeleteItemAlertDialog(indexOfElement);
@@ -222,7 +211,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
@@ -230,29 +218,24 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
 
@@ -264,14 +247,10 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         The case statement determines which button/icon was clicked and executes the appropriate action
         and sending the user to the correct activity.
 
-
      */
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-
         String message = null;
 
         switch(item.getItemId())
@@ -279,32 +258,25 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
-
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
         return false;
     }
@@ -554,7 +526,7 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
     /*  createDeleteItemAlertDialog()
 
-        parameters: int
+        parameters: int indexOfElement ListView Element Pressed.
 
         Behavior: takes int value for index of current item of list view, displays an AlertDialog
         showing ID detail about current ImageDataObject and its position within the Arraylist / ListView
@@ -675,23 +647,24 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.savedImageHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.savedImageHelpMenuParaOne);
         paragraphTwo.setText(R.string.savedImageHelpMenuParaTwo);
+        paragraphTwo.setText(R.string.savedImageHelpMenuParaThree);
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.savedImageHelpMenuDialogTitle);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
     }
-
-
-
 
 
 

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainMenu"
-    android:background="@color/black">
+    android:background="@drawable/main_menu_background"
+    >
 
 
     <androidx.appcompat.widget.Toolbar  android:id="@+id/mainMenuToolbar"
@@ -39,7 +40,7 @@
     <RelativeLayout android:id="@+id/mainMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_menu_background" >
+         >
 
 
         <TextView android:id="@+id/mainMenuTitleXML"

@@ -53,7 +53,7 @@
     <string name="savedImageHelpMenuDialogTitle">Activité des images enregistrées</string>
     <string name="savedImageHelpMenuParaOne">Lorsque vous cliquez sur une image, une fenêtre s\'ouvre affichant des informations détaillées sur l\'image enregistrée.</string>
     <string name="savedImageHelpMenuParaTwo">Lorsqu\'un clic long sur une image ouvre une fenêtre d\'alerte vous demandant si vous souhaitez supprimer cette entrée de la mémoire de l\'application.</string>
-    <string name="savedImageHelpMenuParahree"></string>
+    <string name="savedImageHelpMenuParaThree"></string>
     <!-- ToolBar Strings -->
     <string name="menuItemOneTitle">Domicile</string>
     <string name="menuItemTwoTitle">L\'image d\'aujourd\'hui</string>
@@ -63,6 +63,8 @@
 
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
+    <string name="helpMenuCloseBtnText">Fermer</string>
+
 
     <!-- drawer frame -->
     <string name="open">Open</string>

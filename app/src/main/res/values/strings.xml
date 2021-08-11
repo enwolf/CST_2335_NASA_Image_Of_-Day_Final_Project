@@ -54,8 +54,8 @@
 
     <!--  Saved Image Activity Help Menu  -->
     <string name="savedImageHelpMenuDialogTitle">Saved Images Activity</string>
-    <string name="savedImageHelpMenuParaOne">When an image is clicked on it will open a window displaying detail information about the saved image.</string>
-    <string name="savedImageHelpMenuParaTwo">When an image is long clicked it will open an alert window asking if you would like to delete this entry from the applcaiton memory.</string>
+    <string name="savedImageHelpMenuParaOne" >Short Click on an Image: a window will open displaying detail information about the saved image.</string>
+    <string name="savedImageHelpMenuParaTwo">Long Click on an Image: a window will open asking  if you would like to delete this entry from the application memory.</string>
 
     <!-- ToolBar Strings -->
     <string name="menuItemOneTitle">Home</string>
@@ -63,11 +63,11 @@
     <string name="menuItemThreeTitle">Pick Date</string>
     <string name="menuItemFourTitle">Saved Images</string>
     <string name="overflowMenuTitle">Information | Help</string>
-    <string name="savedImageHelpMenuParahree"></string>
+    <string name="savedImageHelpMenuParaThree"></string>
 
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
-
+    <string name="helpMenuCloseBtnText">Close</string>
     <!-- drawer frame -->
     <string name="open">Open</string>
     <string name="close">Close</string>

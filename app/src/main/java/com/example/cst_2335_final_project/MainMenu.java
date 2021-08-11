@@ -89,7 +89,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
@@ -97,29 +96,24 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
 
@@ -142,32 +136,26 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         return false;
     }
 
@@ -177,21 +165,22 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
-        TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.mainMenuHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.mainMenuHelpMenuParaOne);
         paragraphTwo.setText(R.string.mainMenuHelpMenuParaTwo);
-        paragraphThree.setText((R.string.mainMenuHelpMenuParaThree));
 
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.mainMenuHelpMenuDialogTitle);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
     }
 
