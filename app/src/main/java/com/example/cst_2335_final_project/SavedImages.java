@@ -593,7 +593,7 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         paragraphOne.setText(R.string.savedImageHelpMenuParaOne);
         paragraphTwo.setText(R.string.savedImageHelpMenuParaTwo);
-        paragraphTwo.setText(R.string.savedImageHelpMenuParaThree);
+
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);

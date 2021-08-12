@@ -6,7 +6,6 @@
     <string name="startTitleTextString">NASA Image of the Date</string>
     <string name="startBtnTextString">Click to Start!</string>
 
-
     <!--   Main Menu Activity Strings      -->
     <string name="toolbarTitleMainMenuActivity">Main Menu v3.0</string>
     <string name="mainMenuTitle">Main Menu</string>

@@ -60,26 +60,32 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = findViewById(R.id.sideNavMenu);
         navigationView.setNavigationItemSelectedListener(this);
-        //Without this two statements the navigation menu's menuItems were not responding to clicks events.
+        //Without this  statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-        viewTodayImageBtn.setOnClickListener(Click -> {
+        datePickButton.setOnClickListener(Click -> { startActivity(ReadyDataPickerIntent(nextActivity,datePicker)); });
 
-            String editTextValue = enteredDate.getText().toString();
-            nextActivity.putExtra("date",editTextValue);
-            startActivity(nextActivity);
-
-        });
-
-        datePickButton.setOnClickListener(Click -> {
-
-            startActivity(ReadyDataPickerIntent(nextActivity,datePicker));
-            Toast.makeText(this, datePickerDate, Toast.LENGTH_SHORT).show();
-
-        });
+        viewTodayImageBtn.setOnClickListener(Click -> { sendEnteredDate(nextActivity,enteredDate);  });
 
     }
 
+    /* sendEnteredDate()
+
+        Parameters:
+
+        EditText the date/value entered by the user through the <EditText> View.
+        Intent nextActivity, the activity to be loaded.
+
+        Attaches EditText Value as Extra
+        Starts Activity based on the passed Intent along with its extras.
+
+     */
+
+    public void sendEnteredDate(Intent nextActivity, EditText date){
+
+        nextActivity.putExtra("date", date.getText().toString());
+        startActivity(nextActivity);
+    }
 
     // Inflate the menu items for use in the action bar
     @Override

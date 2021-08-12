@@ -1,20 +1,29 @@
 package com.example.cst_2335_final_project;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private Toolbar toolbar;
-
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +58,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         //Without this two statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-
-
-
         Intent nextActivity = new Intent(this, ImageViewActivity.class);
         todayBtn.setOnClickListener(click -> startActivity(nextActivity));
 
@@ -62,7 +68,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         SavedImageBtn.setOnClickListener(click -> startActivity(savedActivity));
 
     }
-
 
     // Inflate the menu items for use in the action bar
     @Override

@@ -63,7 +63,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     private Button openHD_URL_Btn;
     private Button saveBtn;
     private Bitmap spaceImage;
-    private Intent pickedDateValues;
     private Toolbar toolbar;
     private ProgressBar progBar;
     private String Date;
@@ -74,16 +73,11 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     private String FileNameWithoutExtension;
     private String FileName;
     private String Title;
-    private String passedDateEditText;
-    private String passedDatePickerDate;
     private String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     private String[] stringDateArray = stringDate.split("-");
 
-    Context context = this;
 
-
-    /* ImageViewActivity.java onCreate()
-
+    /*  ImageViewActivity.java onCreate()
 
       After loading activity_image_view.xml we link our views with their java objects
       progBar set to VISIBLE and progress is set to 0 .
@@ -123,6 +117,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         viewExp   = findViewById(R.id.expTextXML);
         saveBtn   = findViewById(R.id.saveButton);
 
+        //starts progressbar as visible with 0% loaded.
         progBar.setVisibility(View.VISIBLE);
         progBar.setProgress(0);
 
@@ -139,52 +134,23 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = findViewById(R.id.sideNavMenu);
         navigationView.setNavigationItemSelectedListener(this);
-
         //Without this  statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-
+        //opens database connection.
         openDatabaseConnection();
 
-        //Todo Maybe extract this to a method later
-        pickedDateValues = getIntent();
-        passedDateEditText = pickedDateValues.getStringExtra("date");
-        passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
-
-        if (passedDatePickerDate != null)
-            Log.i("Test DatePicker Date", passedDatePickerDate);
-
-        getNasaDataJSON queryJSON = new getNasaDataJSON();
-
-        if (passedDatePickerDate != null){
-            Log.i("Test DatePicker Date", passedDatePickerDate);
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDatePickerDate);
-        }else if(passedDateEditText != null) {
-            Log.i("Test DatePicker Date", passedDateEditText);
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
-        }else{
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-        }
-
-
-        //+ stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]
-
+        dateToLoad();
 
         //Todo instead of url could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
         //viewImage.setOnClickListener(Click -> startActivity(openBrowser));
-
-        Log.i("Test Date", stringDate);
-        Log.i("Test Date", "Year = " + stringDateArray[0]);
-        Log.i("Test Date", "Month = " + stringDateArray[1]);
-        Log.i("Test Date", "Day = " + stringDateArray[2]);
-        Log.i("Test Date", stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-        Log.i("Test Date", "Today's Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-
 
         openHD_URL_Btn.setOnClickListener(Click -> startActivity(openBrowser) );
 
         saveBtn.setOnClickListener(Click -> saveButtonAction() );
     }
+
+
 
     // Inflate the menu items for use in the action bar
     @Override
@@ -409,8 +375,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
     /*  openDatabaseConnection()
 
-
-        Behavior: opens connection for writable Database on db object take as parameter
+        Behavior: opens connection for writable Database.
 
     */
 
@@ -438,7 +403,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         Exception: handles FileNotFoundException when attempting to save image file
 
      */
-
 
     private void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
 
@@ -508,6 +472,40 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
                 .show();
     }
 
+     /*   dateToLoad()
+
+           Variables:
+
+           Intent pickedDateValues, Intent that launched this activity.
+           String passedDatePickerDate stores date values sent via DatePicker Object from PickDateActivity.java
+           String passedDateEditText stores date values sent via EditText Object from PickDateActivity.java
+           getNasaDataJSON queryJSON the object we will use to load data from the NASA API.
+
+           If coming from MainMenu then today's date will be show.
+
+           If coming form picked date activity which ever date value that is not null will be displayed.
+
+
+     */
+
+    private void dateToLoad( ){
+
+        Intent pickedDateValues = getIntent();
+        String passedDateEditText = pickedDateValues.getStringExtra("date");
+        String passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
+
+
+        getNasaDataJSON queryJSON = new getNasaDataJSON();
+
+        if (passedDatePickerDate != null) {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDatePickerDate);
+        } else if (passedDateEditText != null) {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
+        } else {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+        }
+    }
+
     /* createAlertDialogHelpWindow()
 
 
@@ -528,13 +526,14 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
+        TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
         activityTitle.setText(R.string.imageViewHelpMenuDialogTitle);
         info.setText(R.string.helpMenuTitle);
 
         paragraphOne.setText(R.string.imageViewHelpMenuParaOne);
         paragraphTwo.setText(R.string.imageViewHelpMenuParaTwo);
-        paragraphTwo.setText(R.string.imageViewHelpMenuParaThree);
+        paragraphThree.setText(R.string.imageViewHelpMenuParaThree);
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
