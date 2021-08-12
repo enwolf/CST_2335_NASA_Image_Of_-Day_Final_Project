@@ -75,5 +75,9 @@
     <string name="sideMenuItemThree">Choisir la date de l\'image</string>
     <string name="sideMenuItemFour">Liste des images enregistrées</string>
 
+    <!-- Delete imageData window -->
+    <string name="deleteImageHeader">Supprimer les données d\'image ?</string>
+
+
 
 </resources>

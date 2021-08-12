@@ -259,6 +259,8 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         alertBuilder.setView(alert_dialog_layout);
         alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
+
+
     }
 
 

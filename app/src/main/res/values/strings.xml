@@ -77,6 +77,8 @@
     <string name="sideMenuItemThree">Pick Image Date</string>
     <string name="sideMenuItemFour">Saved Images List</string>
 
+    <!-- Delete imageData window -->
+    <string name="deleteImageHeader">Delete Image Data?</string>
 
 
 </resources>
