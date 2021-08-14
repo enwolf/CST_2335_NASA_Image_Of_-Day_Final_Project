@@ -29,14 +29,23 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private Toolbar toolbar;
-    Context context = this;
+    private String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    private String[] stringDateArray = date.split("-");
+
+    private  CharSequence text =  stringDateArray[0].toString()  + stringDateArray[1].toString() + stringDateArray[2].toString();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
         Button todayBtn = findViewById(R.id.viewTodayImageMainMenuBtnXML);
         Button PickDateBtn = findViewById(R.id.pickDateMainMenuBtnXML);
         Button SavedImageBtn = findViewById(R.id.savedImagesMainMenuBtnXML);
@@ -59,15 +68,33 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.bringToFront();
 
         Intent nextActivity = new Intent(this, ImageViewActivity.class);
-        todayBtn.setOnClickListener(click -> startActivity(nextActivity));
+
+        /*
+            ERROR: For some reason when testing on the emulator (Nexus 5X API 23 Marshmello) calling a toast message
+            will for some unknown reason crash the application completely if it is more then 5 character's long.
+
+            Even though in previous builds I have been able to display larger toast messages with no problem before.
+
+            To ensure that the app doesn't crash if being run on the same emulator I have commented out the + date that should be displayed when
+            the selects with the today message.
+
+            This issue does not happen at all when testing with my Pixel 2 XL or my Samsung Tab A8 device in devloper mode.
+
+            Unfortunately I did not have time to troubleshoot this issue before the due date as I had been testing on my devices
+            due to the instability  and unreliability of the Android Studio emulators
+
+         */
+
+        todayBtn.setOnClickListener(click -> {Toast.makeText(this, "today" /* + date*/, Toast.LENGTH_SHORT).show(); startActivity(nextActivity);});
 
         Intent pickedDateActivity = new Intent(this, PickDateActivity.class);
-        PickDateBtn.setOnClickListener(click -> startActivity(pickedDateActivity));
+        PickDateBtn.setOnClickListener(Click -> startActivity(pickedDateActivity));
 
         Intent savedActivity = new Intent(this, SavedImages.class);
         SavedImageBtn.setOnClickListener(click -> startActivity(savedActivity));
 
     }
+
 
     // Inflate the menu items for use in the action bar
     @Override
@@ -164,6 +191,15 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         return false;
     }
 
+    /* createAlertDialogHelpWindow()
+
+
+       Sets alert_dialog_layout which holds the inflated layout for alert dialog window
+       Create View objects which we will use to set text values.
+       Set Text values for View's.
+       Build alert window via AlertDialog.Builder and display it to the user.
+
+    */
 
     private void createAlertDialogHelpWindow(){
 

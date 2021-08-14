@@ -141,7 +141,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-
     /* onNavigationItemSelected()
 
         Parameter: MenuItem which is the <item> that was clicked in the side menu.
@@ -184,8 +183,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         return false;
     }
 
-
-
     /* ReadyDataPickerIntent()
 
        @Para Intent intent the intent object we will be adding extra's to and returning.
@@ -203,7 +200,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
        returns the intent with included extra's
 
      */
-
 
     private Intent ReadyDataPickerIntent (Intent intent, DatePicker datePicker) {
 
@@ -232,9 +228,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
         return intent;
     }
-
-
-
 
     /* createAlertDialogHelpWindow()
 

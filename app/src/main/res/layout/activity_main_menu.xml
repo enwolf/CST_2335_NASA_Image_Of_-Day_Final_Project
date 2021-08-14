@@ -44,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"    >
 
-
             <TextView android:id="@+id/mainMenuTitleXML"
 
                 android:layout_width="wrap_content"
@@ -65,7 +64,6 @@
                 android:textColor="@color/white"
                 android:text="@string/mainMenuTodaysImageBtnText"             />
 
-
             <Button android:id="@+id/pickDateMainMenuBtnXML"
 
                 android:layout_width="match_parent"
@@ -75,7 +73,6 @@
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/white"
                 android:text="@string/mainMenuPickDateBtnText"      />
-
 
             <Button android:id="@+id/savedImagesMainMenuBtnXML"
 

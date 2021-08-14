@@ -150,8 +150,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         saveBtn.setOnClickListener(Click -> saveButtonAction() );
     }
 
-
-
     // Inflate the menu items for use in the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -467,7 +465,7 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         createDirectoryAndSaveFile(spaceImage,FileName);
 
         Intent savedActivity = new Intent(this, SavedImages.class);
-        Snackbar.make(saveBtn, getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
+        Snackbar.make(saveBtn, Title + " " + getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
                 .setAction(getResources().getString(R.string.snackbarCallToAction), click-> startActivity(savedActivity))
                 .show();
     }
@@ -502,6 +500,8 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         } else if (passedDateEditText != null) {
             queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
         } else {
+
+
             queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
         }
     }
@@ -520,7 +520,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
-
 
         TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
         TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);

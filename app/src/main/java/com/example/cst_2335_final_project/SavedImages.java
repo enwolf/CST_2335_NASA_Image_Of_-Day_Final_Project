@@ -31,6 +31,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 import java.io.FileInputStream;
@@ -127,7 +129,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
        the bundle object as an extra to be sent.
 
      */
-
 
     private void createFragment(int indexOfElement){
 
@@ -481,7 +482,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         Log.d("ImageViewActivity.java", "Results in cursor: " + DatabaseUtils.dumpCursorToString(myCursor));
     }
 
-
     /*  createDeleteItemAlertDialog()
 
         Parameters: int indexOfElement this is the ListView Element indexValue.
@@ -555,7 +555,7 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             deleteImageData(imageDataObjToDelete);
             imageDataArrayList.remove(indexOfElement);
             imageDataArrayListAdapter.notifyDataSetChanged();
-
+            Toast.makeText(this, imageDataObjToDelete.getTitle() + " has been deleted.", Toast.LENGTH_SHORT).show();
         });
 
         alertBuilder.create().show();
@@ -566,7 +566,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
     private void deleteImageData(ImageData imageDataToDelete){
         dbObject.delete(DatabaseOpener.TABLE_NAME, DatabaseOpener.COL_ID + "= ?", new String[] {Long.toString(imageDataToDelete.getId())});
     }
-
 
     /* createAlertDialogHelpWindow()
 

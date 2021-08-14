@@ -48,7 +48,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:text="Select Date to View Image"
+                android:text="@string/date_pick_title"
                 android:textColor="@color/white"
                 android:textSize="30dp"  />
 
@@ -70,12 +70,12 @@
                 android:layout_below="@id/datePickerXML"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
-                android:text="View Selected Date"  />
+                android:text="@string/editTextTitle"  />
 
             <TextView android:id="@+id/pickDateTitleXML"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter Date of Image to view"
+                android:text="@string/datePickerButton"
                 android:textSize="25dp"
                 android:textColor="@color/white"
 
@@ -105,7 +105,7 @@
 
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="10dp"
-                android:text="Click to view" />
+                android:text="@string/pickDateEditTextButton" />
 
         </RelativeLayout>
     </androidx.drawerlayout.widget.DrawerLayout>

@@ -7,7 +7,7 @@
     <string name="startBtnTextString">Click to Start!</string>
 
     <!--   Main Menu Activity Strings      -->
-    <string name="toolbarTitleMainMenuActivity">Main Menu v3.0</string>
+    <string name="toolbarTitleMainMenuActivity">Main Menu</string>
     <string name="mainMenuTitle">Main Menu</string>
     <string name="mainMenuTodaysImageBtnText">View Today\'s Image</string>
     <string name="mainMenuPickDateBtnText">Select Date to View Image</string>
@@ -21,14 +21,14 @@
 
 
     <!--   Image View Activity Strings  -->
-    <string name="toolbarTitleImageViewActivity">Image View v3.0</string>
+    <string name="toolbarTitleImageViewActivity">Image View</string>
     <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL:</string>
     <string name="expTitleString">Explanation: </string>
     <string name="hdUrlBtnString">View HD Image </string>
-    <string name="snackbarMessage">Added to favorite ImageData list. </string>
-    <string name="snackbarCallToAction">View Favorites Now!</string>
+    <string name="snackbarMessage">Has Been Saved.</string>
+    <string name="snackbarCallToAction">View Saved Images!</string>
     <string name="saveImageBtn">Save Image</string>
 
     <!--   Image View Activity Help Menu  -->
@@ -37,9 +37,12 @@
     <string name="imageViewHelpMenuParaTwo">View HD Image Button: When this button is clicked it will open the default browser and displayed the HD Image within.</string>
     <string name="imageViewHelpMenuParaThree">Save Image Button: When this button is clicked the current image and its data will be saved within the application memory. </string>
 
-
     <!--   Pick Date Activity Strings  -->
-    <string name="toolbarTitleDatePickerActivity">DatePicker v3.0</string>
+    <string name="toolbarTitleDatePickerActivity">Pick Image Date</string>
+    <string name="date_pick_title">Select Date to View Image</string>
+    <string name="pickDateEditTextButton">Click to view</string>
+    <string name="datePickerButton">Enter Date of Image to view</string>
+    <string name="editTextTitle">View Selected Date</string>
 
     <!--   Pick Date Activity View Activity Help Menu  -->
     <string name="datePickerHelpMenuDialogTitle">Date Picker Activity</string>
@@ -48,8 +51,7 @@
     <string name="pickedDateHelpMenuParaThree"></string>
 
     <!--  Saved Images Activity Strings  -->
-    <string name="toolbarTitleSavedImagesActivity">Saved Images v3.0</string>
-
+    <string name="toolbarTitleSavedImagesActivity">Saved Images</string>
 
     <!--  Saved Image Activity Help Menu  -->
     <string name="savedImageHelpMenuDialogTitle">Saved Images Activity</string>
@@ -67,6 +69,7 @@
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
     <string name="helpMenuCloseBtnText">Close</string>
+
     <!-- drawer frame -->
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -78,6 +81,7 @@
 
     <!-- Delete imageData window -->
     <string name="deleteImageHeader">Delete Image Data?</string>
+
 
 
 </resources>

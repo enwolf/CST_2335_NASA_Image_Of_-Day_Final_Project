@@ -8,6 +8,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -28,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
 
 
         Intent mainMenu = new Intent(this, MainMenu.class);
-        clickToStart.setOnClickListener(click -> startActivity(mainMenu));
+        clickToStart.setOnClickListener(click -> { startActivity(mainMenu);  });
 
 
 
