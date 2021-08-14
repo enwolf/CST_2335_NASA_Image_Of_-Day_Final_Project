@@ -69,23 +69,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         Intent nextActivity = new Intent(this, ImageViewActivity.class);
 
-        /*
-            ERROR: For some reason when testing on the emulator (Nexus 5X API 23 Marshmello) calling a toast message
-            will for some unknown reason crash the application completely if it is more then 5 character's long.
-
-            Even though in previous builds I have been able to display larger toast messages with no problem before.
-
-            To ensure that the app doesn't crash if being run on the same emulator I have commented out the + date that should be displayed when
-            the selects with the today message.
-
-            This issue does not happen at all when testing with my Pixel 2 XL or my Samsung Tab A8 device in devloper mode.
-
-            Unfortunately I did not have time to troubleshoot this issue before the due date as I had been testing on my devices
-            due to the instability  and unreliability of the Android Studio emulators
-
-         */
-
-        todayBtn.setOnClickListener(click -> {Toast.makeText(this, "today" /* + date*/, Toast.LENGTH_SHORT).show(); startActivity(nextActivity);});
+        todayBtn.setOnClickListener(click -> {Toast.makeText(this, "     Today \n"  + date, Toast.LENGTH_SHORT).show(); startActivity(nextActivity);});
 
         Intent pickedDateActivity = new Intent(this, PickDateActivity.class);
         PickDateBtn.setOnClickListener(Click -> startActivity(pickedDateActivity));
