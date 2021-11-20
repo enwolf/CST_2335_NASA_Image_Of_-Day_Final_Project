@@ -58,11 +58,11 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     private TextView viewExp;
     private TextView viewURL;
     private TextView viewDate;
+    private TextView viewTitle;
     private ImageView viewImage;
     private Button openHD_URL_Btn;
     private Button saveBtn;
     private Bitmap spaceImage;
-    private Intent pickedDateValues;
     private Toolbar toolbar;
     private ProgressBar progBar;
     private String Date;
@@ -73,16 +73,11 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     private String FileNameWithoutExtension;
     private String FileName;
     private String Title;
-    private String passedDateEditText;
-    private String passedDatePickerDate;
     private String stringDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     private String[] stringDateArray = stringDate.split("-");
 
-    Context context = this;
 
-
-    /* ImageViewActivity.java onCreate()
-
+    /*  ImageViewActivity.java onCreate()
 
       After loading activity_image_view.xml we link our views with their java objects
       progBar set to VISIBLE and progress is set to 0 .
@@ -113,13 +108,16 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_image_view);
 
         openHD_URL_Btn = findViewById(R.id.hdUrlButton);
+
         viewImage = findViewById(R.id.nasaImageContainer);
         progBar   = findViewById(R.id.viewActivityProBar);
+        viewTitle = findViewById(R.id.imageViewTitleXML);
         viewDate  = findViewById(R.id.dateTextXML);
         viewURL   = findViewById(R.id.urlTextXML);
         viewExp   = findViewById(R.id.expTextXML);
         saveBtn   = findViewById(R.id.saveButton);
 
+        //starts progressbar as visible with 0% loaded.
         progBar.setVisibility(View.VISIBLE);
         progBar.setProgress(0);
 
@@ -136,47 +134,16 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = findViewById(R.id.sideNavMenu);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //Without this two statements the navigation menu's menuItems were not responding to clicks events.
+        //Without this  statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
-        //navigationView.requestLayout();
 
+        //opens database connection.
         openDatabaseConnection();
 
-        //Todo Maybe extract this to a method later
-        pickedDateValues = getIntent();
-        passedDateEditText = pickedDateValues.getStringExtra("date");
-        passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
-
-        if (passedDatePickerDate != null)
-            Log.i("Test DatePicker Date", passedDatePickerDate);
-
-        getNasaDataJSON queryJSON = new getNasaDataJSON();
-
-        if (passedDatePickerDate != null){
-            Log.i("Test DatePicker Date", passedDatePickerDate);
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDatePickerDate);
-        }else if(passedDateEditText != null) {
-            Log.i("Test DatePicker Date", passedDateEditText);
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
-        }else{
-            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-        }
-
-
-        //+ stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]
-
+        dateToLoad();
 
         //Todo instead of url could be used to load a fragment showing a larger version of the image, which means you could show more of a thumb nail.
         //viewImage.setOnClickListener(Click -> startActivity(openBrowser));
-
-        Log.i("Test Date", stringDate);
-        Log.i("Test Date", "Year = " + stringDateArray[0]);
-        Log.i("Test Date", "Month = " + stringDateArray[1]);
-        Log.i("Test Date", "Day = " + stringDateArray[2]);
-        Log.i("Test Date", stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-        Log.i("Test Date", "Todays Date URL = https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
-
 
         openHD_URL_Btn.setOnClickListener(Click -> startActivity(openBrowser) );
 
@@ -208,7 +175,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
@@ -216,29 +182,24 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
 
@@ -261,123 +222,106 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         return false;
     }
 
     //Type1  Type2   Type3
     private class getNasaDataJSON extends AsyncTask< String, Integer, String>
     {
-           //Type1
-            public String doInBackground(String ... args) {
-                try {
+        //Type1
+        public String doInBackground(String ... args) {
+            try {
 
-                    //create a URL object of what server to contact:
-                    URL url = new URL(args[0]);
+                //create a URL object of what server to contact:
+                URL url = new URL(args[0]);
 
-                    JSONObject reportJSON = createObjectJSON(url);
+                JSONObject reportJSON = createObjectJSON(url);
 
-                    Date = reportJSON.getString("date");
-                    publishProgress(25);
-                    URLPath = reportJSON.getString("url");
+                Date = reportJSON.getString("date");
+                publishProgress(25);
+                URLPath = reportJSON.getString("url");
 
-                    Explanation = reportJSON.getString("explanation");
-                    urlHdPath = reportJSON.getString("hdurl");
-                    Title = reportJSON.getString("title");
+                Explanation = reportJSON.getString("explanation");
+                urlHdPath = reportJSON.getString("hdurl");
+                Title = reportJSON.getString("title");
 
-                    Log.i("Test URL PATH", "Value of HD URL PATH = " + urlHdPath);
-                    publishProgress(50);
+                publishProgress(50);
 
-                    FileNameWithExtension = URLPath.substring(URLPath.lastIndexOf('/') + 1, URLPath.length());
-                    FileNameWithoutExtension = FileNameWithExtension.substring(0, FileNameWithExtension.lastIndexOf('.'));
+                FileNameWithExtension = URLPath.substring(URLPath.lastIndexOf('/') + 1, URLPath.length());
+                FileNameWithoutExtension = FileNameWithExtension.substring(0, FileNameWithExtension.lastIndexOf('.'));
 
-                    //sets url for intent object to load webpage in browser of HD image.
-                    openBrowser.setData(Uri.parse(urlHdPath));
+                //sets url for intent object to load webpage in browser of HD image.
+                openBrowser.setData(Uri.parse(urlHdPath));
 
-                    URL urlObject = new URL(URLPath);
-                    //String testSplit = urlObject.getPath();
+                URL urlObject = new URL(URLPath);
 
-                    Log.i("ImageViewActivity", "explanation text: " + Explanation);
+                FileName = FileNameWithoutExtension + ".png";
 
-                    Log.i("URL TEST", "URL String path = " + URLPath);
-                    Log.i("URL TEST", "URL getFile() = " + urlObject.getFile());
-                    Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
+                URL imageDataURL = new URL(URLPath);
+                HttpURLConnection connectionImage = (HttpURLConnection) imageDataURL.openConnection();
+                connectionImage.connect();
+                int responseCode = connectionImage.getResponseCode();
 
-                    Log.i("URL TEST", "URL getPath() = " + urlObject.getPath());
-                    Log.i("FileWithExtension", "Path = " + FileNameWithExtension);
-                    Log.i("FileWithoutExtension", "Path = " + FileNameWithoutExtension);
+                if (responseCode == 200) {
 
-                    FileName = FileNameWithoutExtension + ".png";
+                    spaceImage = BitmapFactory.decodeStream(connectionImage.getInputStream());
+                    FileOutputStream outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+                    spaceImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
 
-                    URL imageDataURL = new URL(URLPath);
-                    HttpURLConnection connectionImage = (HttpURLConnection) imageDataURL.openConnection();
-                    connectionImage.connect();
-                    int responseCode = connectionImage.getResponseCode();
-
-                    if (responseCode == 200) {
-
-                        spaceImage = BitmapFactory.decodeStream(connectionImage.getInputStream());
-                        FileOutputStream outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
-                        spaceImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
-
-                        publishProgress(75);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    publishProgress(75);
                 }
-                publishProgress(100);
-              return "Complete";
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-                //Type 2
-            public void onProgressUpdate(Integer ... args)
-            {
-                progBar.setVisibility(args[0]);
-            }
-            //Type3
-            public void onPostExecute(String fromDoInBackground)
-            {
-                Log.i("HTTP", fromDoInBackground);
-
-                viewDate.setText(Date);
-                viewURL.setText(URLPath);
-                viewExp.setText(Explanation);
-                viewImage.setImageBitmap(spaceImage);
-
-                progBar.setVisibility(View.INVISIBLE);
-
-            }
+            publishProgress(100);
+            return "Complete";
         }
+
+        //Type 2
+        public void onProgressUpdate(Integer ... args)
+        {
+            progBar.setVisibility(args[0]);
+        }
+        //Type3
+        public void onPostExecute(String fromDoInBackground)
+        {
+            Log.i("HTTP", fromDoInBackground);
+
+            viewDate.setText(Date);
+            viewURL.setText(URLPath);
+            viewExp.setText(Explanation);
+            viewImage.setImageBitmap(spaceImage);
+            viewTitle.setText(Title);
+
+            progBar.setVisibility(View.INVISIBLE);
+
+        }
+    }
 
     /*  createObjectJSON()
 
@@ -405,32 +349,31 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
     public JSONObject createObjectJSON(URL url) throws IOException, JSONException {
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream urlResponse = urlConnection.getInputStream();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        InputStream urlResponse = urlConnection.getInputStream();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlResponse, "UTF-8"), 8);
-            StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlResponse, "UTF-8"), 8);
+        StringBuilder stringBuilder = new StringBuilder();
 
-            String currentLine = null;
+        String currentLine = null;
 
-            while ((currentLine = bufferedReader.readLine()) != null)
-            {
-                stringBuilder.append(currentLine + "\n");
-                Log.i("createObjectJSON()", "CurrentLine: " + currentLine) ;
-            }
-
-            String result = stringBuilder.toString();
-
-            JSONObject reportJSON = new JSONObject(result);
-
-            return reportJSON;
-
+        while ((currentLine = bufferedReader.readLine()) != null)
+        {
+            stringBuilder.append(currentLine + "\n");
+            Log.i("createObjectJSON()", "CurrentLine: " + currentLine) ;
         }
+
+        String result = stringBuilder.toString();
+
+        JSONObject reportJSON = new JSONObject(result);
+
+        return reportJSON;
+
+    }
 
     /*  openDatabaseConnection()
 
-
-        Behavior: opens connection for writable Database on db object take as parameter
+        Behavior: opens connection for writable Database.
 
     */
 
@@ -458,7 +401,6 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         Exception: handles FileNotFoundException when attempting to save image file
 
      */
-
 
     private void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) {
 
@@ -523,9 +465,45 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
         createDirectoryAndSaveFile(spaceImage,FileName);
 
         Intent savedActivity = new Intent(this, SavedImages.class);
-        Snackbar.make(saveBtn, getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
+        Snackbar.make(saveBtn, Title + " " + getResources().getString(R.string.snackbarMessage) , Snackbar.LENGTH_LONG)
                 .setAction(getResources().getString(R.string.snackbarCallToAction), click-> startActivity(savedActivity))
                 .show();
+    }
+
+     /*   dateToLoad()
+
+           Variables:
+
+           Intent pickedDateValues, Intent that launched this activity.
+           String passedDatePickerDate stores date values sent via DatePicker Object from PickDateActivity.java
+           String passedDateEditText stores date values sent via EditText Object from PickDateActivity.java
+           getNasaDataJSON queryJSON the object we will use to load data from the NASA API.
+
+           If coming from MainMenu then today's date will be show.
+
+           If coming form picked date activity which ever date value that is not null will be displayed.
+
+
+     */
+
+    private void dateToLoad( ){
+
+        Intent pickedDateValues = getIntent();
+        String passedDateEditText = pickedDateValues.getStringExtra("date");
+        String passedDatePickerDate = pickedDateValues.getStringExtra("datePickerDate");
+
+
+        getNasaDataJSON queryJSON = new getNasaDataJSON();
+
+        if (passedDatePickerDate != null) {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDatePickerDate);
+        } else if (passedDateEditText != null) {
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + passedDateEditText);
+        } else {
+
+
+            queryJSON.execute("https://api.nasa.gov/planetary/apod?api_key=" + nasaApiKey + "&date=" + stringDateArray[0] + "-" + stringDateArray[1] + "-" + stringDateArray[2]);
+        }
     }
 
     /* createAlertDialogHelpWindow()
@@ -543,26 +521,27 @@ public class ImageViewActivity extends AppCompatActivity implements NavigationVi
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
         TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.imageViewHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.imageViewHelpMenuParaOne);
         paragraphTwo.setText(R.string.imageViewHelpMenuParaTwo);
-        paragraphThree.setText((R.string.imageViewHelpMenuParaThree));
+        paragraphThree.setText(R.string.imageViewHelpMenuParaThree);
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.imageViewHelpMenuDialogTitle);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
     }
 
 
 }//end of File
-
 
 
 

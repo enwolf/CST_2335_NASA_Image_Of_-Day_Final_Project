@@ -1,14 +1,13 @@
 <resources>
 
-    <string name="app_name">CST_2335_Final_Project</string>
+    <string name="app_name">Image of the Date</string>
 
     <!--   Start Activity Strings      -->
-    <string name="startTitleTextString">NASA Image Of The Date</string>
+    <string name="startTitleTextString">NASA Image of the Date</string>
     <string name="startBtnTextString">Click to Start!</string>
 
-
     <!--   Main Menu Activity Strings      -->
-    <string name="toolbarTitleMainMenuActivity">Main Menu v2.0</string>
+    <string name="toolbarTitleMainMenuActivity">Main Menu</string>
     <string name="mainMenuTitle">Main Menu</string>
     <string name="mainMenuTodaysImageBtnText">View Today\'s Image</string>
     <string name="mainMenuPickDateBtnText">Select Date to View Image</string>
@@ -21,19 +20,15 @@
     <string name="mainMenuHelpMenuParaThree">Saved Image Button: Brings user to saved Images Activity.</string>
 
 
-    Pick Date Button: Brings the user to Pick Date Activity.
-
-    Saved Image Button: Brings user to saved Images Activity.
-
-
     <!--   Image View Activity Strings  -->
-    <string name="toolbarTitleImageViewActivity">Image View v2.0</string>
+    <string name="toolbarTitleImageViewActivity">Image View</string>
+    <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
-    <string name="urlTitleString">URL: </string>
+    <string name="urlTitleString">URL:</string>
     <string name="expTitleString">Explanation: </string>
     <string name="hdUrlBtnString">View HD Image </string>
-    <string name="snackbarMessage">Added to favorite ImageData list. </string>
-    <string name="snackbarCallToAction">View Favorites Now!</string>
+    <string name="snackbarMessage">Has Been Saved.</string>
+    <string name="snackbarCallToAction">View Saved Images!</string>
     <string name="saveImageBtn">Save Image</string>
 
     <!--   Image View Activity Help Menu  -->
@@ -42,9 +37,12 @@
     <string name="imageViewHelpMenuParaTwo">View HD Image Button: When this button is clicked it will open the default browser and displayed the HD Image within.</string>
     <string name="imageViewHelpMenuParaThree">Save Image Button: When this button is clicked the current image and its data will be saved within the application memory. </string>
 
-
     <!--   Pick Date Activity Strings  -->
-    <string name="toolbarTitleDatePickerActivity">DatePicker v2.0</string>
+    <string name="toolbarTitleDatePickerActivity">Pick Image Date</string>
+    <string name="date_pick_title">Select Date to View Image</string>
+    <string name="pickDateEditTextButton">Click to view</string>
+    <string name="datePickerButton">Enter Date of Image to view</string>
+    <string name="editTextTitle">View Selected Date</string>
 
     <!--   Pick Date Activity View Activity Help Menu  -->
     <string name="datePickerHelpMenuDialogTitle">Date Picker Activity</string>
@@ -53,13 +51,12 @@
     <string name="pickedDateHelpMenuParaThree"></string>
 
     <!--  Saved Images Activity Strings  -->
-    <string name="toolbarTitleSavedImagesActivity">Saved Images v2.0</string>
-
+    <string name="toolbarTitleSavedImagesActivity">Saved Images</string>
 
     <!--  Saved Image Activity Help Menu  -->
     <string name="savedImageHelpMenuDialogTitle">Saved Images Activity</string>
-    <string name="savedImageHelpMenuParaOne">When an image is clicked on it will open a window displaying detail information about the saved image.</string>
-    <string name="savedImageHelpMenuParaTwo">When an image is long clicked it will open an alert window asking if you would like to delete this entry from the applcaiton memory.</string>
+    <string name="savedImageHelpMenuParaOne" >Short Click on an Image: a window will open displaying detail information about the saved image.</string>
+    <string name="savedImageHelpMenuParaTwo">Long Click on an Image: a window will open asking  if you would like to delete this entry from the application memory.</string>
 
     <!-- ToolBar Strings -->
     <string name="menuItemOneTitle">Home</string>
@@ -67,20 +64,24 @@
     <string name="menuItemThreeTitle">Pick Date</string>
     <string name="menuItemFourTitle">Saved Images</string>
     <string name="overflowMenuTitle">Information | Help</string>
-    <string name="savedImageHelpMenuParahree"></string>
+    <string name="savedImageHelpMenuParaThree"></string>
 
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
-
+    <string name="helpMenuCloseBtnText">Close</string>
 
     <!-- drawer frame -->
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="sideMenuHeaderTitleText">NASA Image of the Day App</string>
+    <string name="sideMenuHeaderTitleText">NASA Image of the Date</string>
     <string name="sideMenuItemOne">Main Menu</string>
     <string name="sideMenuItemTwo">Today\'s Image</string>
     <string name="sideMenuItemThree">Pick Image Date</string>
     <string name="sideMenuItemFour">Saved Images List</string>
+
+    <!-- Delete imageData window -->
+    <string name="deleteImageHeader">Delete Image Data?</string>
+
 
 
 </resources>

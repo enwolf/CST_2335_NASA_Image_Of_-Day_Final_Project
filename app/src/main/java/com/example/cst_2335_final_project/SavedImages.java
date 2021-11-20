@@ -7,18 +7,13 @@
 
 package com.example.cst_2335_final_project;
 
-
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -39,7 +34,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,15 +43,25 @@ import java.util.List;
 
 public class SavedImages extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
-
     //Activity request code for use with onActivityResults.
     public static final int ACTIVITY_REQUEST_CODE = 400;
+
+    // String labels for Bundle Data, used for passing and retrieving stored values
+    public final static String IMAGE_DATA_ID = "ID";
+    public final static String IMAGE_DATA_DATE = "DATE";
+    public final static String IMAGE_DATA_TITLE = "TITLE";
+    public final static String IMAGE_DATA_EXPLANATION = "EXPLANATION";
+    public final static String IMAGE_DATA_URL = "URL";
+    public final static String IMAGE_DATA_HD_URL = "HD_URL";
+    public final static String IMAGE_DATA_FILENAME = "FILENAME";
+    public final static String IMAGE_DATA_IMAGE_FILE_PATH = "FILEPATH";
+
+    //Class wide variables
     private SQLiteDatabase dbObject;
     private ArrayList<ImageData> imageDataArrayList = new ArrayList<>(Arrays.asList());
     private ArrayListAdapter imageDataArrayListAdapter;
     private File dirPath;
     private Toolbar toolbar;
-
 
 
     /* SavedImages.java / activity_saved_images.xml onCreate()
@@ -67,9 +71,8 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
        Links listView with view in xml layout file then attach imageDataArrayListAdapter to the list view
        The we call loadDataFromDatabase() to populate any saved data into our listview.
        Set setOnItemClickListener and setOnItemLongClickListener to listview and depending on the type of click
-       creates the correct Alert Dialog in response. A long click will load the create alert dialog to
-       delete item from database/listViewArray and a short click will display ImageData Objects details.
-
+       creates the correct Alert Dialog or loads a fragment in response. A long click will load the create alert dialog to
+       delete item from database/listViewArray and a short click will display ImageData Objects details in a fragment.
 
     */
 
@@ -82,6 +85,9 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         imageDataArrayListAdapter  = new ArrayListAdapter();
         dirPath = new File(getCacheDir(), "imageFolder");
+
+        Log.i("Test dirPath ", dirPath.toString());
+        Log.i("Test dirPath ", dirPath.getAbsolutePath());
 
         ListView listViewImageData = findViewById(R.id.savedImageListViewXML);
         listViewImageData.setAdapter(imageDataArrayListAdapter);
@@ -102,22 +108,44 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         //Without this two statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-
         loadDataFromDatabase();
 
+        //The method called on click event creates a fragment based object stored at index value.
+        listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> { createFragment(indexOfElement);  });
+        //Long click calls the delete ImageData Dialog Window
+        listViewImageData.setOnItemLongClickListener( (AdapterView, View, indexOfElement, databaseID) -> { createDeleteItemAlertDialog(indexOfElement); return true; });
 
-        listViewImageData.setOnItemClickListener((list, view, indexOfElement, databaseID) -> {
-            createItemDetailAlertDialog(indexOfElement);
-        });
+    }
 
+    /* createFragment()
 
-        listViewImageData.setOnItemLongClickListener( (AdapterView, View, indexOfElement, databaseID) -> {
-            createDeleteItemAlertDialog(indexOfElement);
+       Parameter: int indexOfElement, the index of the element clicked/pressed on in the ListView
+                  used to retrieve data values of ImageData Object at this index.
 
-            return true;
-        });
+       Creates Bundle object dataToSend, which stores values as a key/value item. we use the class
+       wide string variables as our key/label's and the specific ImageDate Objects values.
 
+       Creates intent for the activity which will load the fragment in its FrameLayout, and includes
+       the bundle object as an extra to be sent.
 
+     */
+
+    private void createFragment(int indexOfElement){
+
+        Bundle dataToSend = new Bundle();
+
+        dataToSend.putLong(IMAGE_DATA_ID,  imageDataArrayList.get(indexOfElement).getId());
+        dataToSend.putString(IMAGE_DATA_DATE,  imageDataArrayList.get(indexOfElement).getDate());
+        dataToSend.putString(IMAGE_DATA_TITLE,  imageDataArrayList.get(indexOfElement).getTitle());
+        dataToSend.putString(IMAGE_DATA_EXPLANATION,  imageDataArrayList.get(indexOfElement).getExplanation());
+        dataToSend.putString(IMAGE_DATA_URL,  imageDataArrayList.get(indexOfElement).getUrlString());
+        dataToSend.putString(IMAGE_DATA_HD_URL,  imageDataArrayList.get(indexOfElement).getHdUrlString());
+        dataToSend.putString(IMAGE_DATA_FILENAME,  imageDataArrayList.get(indexOfElement).getFileName());
+        dataToSend.putString(IMAGE_DATA_IMAGE_FILE_PATH,  dirPath.toString());
+
+        Intent savedImagesFragmentActivity  = new Intent(SavedImages.this, SaveImagesFragmentActivity.class);
+        savedImagesFragmentActivity.putExtras(dataToSend);
+        startActivity(savedImagesFragmentActivity);
     }
 
     // Inflate the menu items for use in the action bar
@@ -145,40 +173,33 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
-            //what to do when the menu item is selected:
+            //handles which button was clicked/pressed from the menu.
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
-
 
     /* onNavigationItemSelected()
 
@@ -187,14 +208,10 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
         The case statement determines which button/icon was clicked and executes the appropriate action
         and sending the user to the correct activity.
 
-
      */
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-
         String message = null;
 
         switch(item.getItemId())
@@ -202,36 +219,28 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-
         return false;
     }
-
 
     /* ArrayListAdapter class is a custom BaseAdapter class for use with ListView.
 
@@ -293,12 +302,12 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
             //Link View with XML
             TextView titleText = (TextView) newView.findViewById(R.id.listViewLayoutTitleXML);
             TextView dateText  = (TextView) newView.findViewById(R.id.listViewLayoutDateXML);
-            TextView urlText =  (TextView) newView.findViewById(R.id.listViewLayoutUrlXML);
+
 
             //Set Text values
             titleText.setText(currentImageDataObject.getTitle());
             dateText.setText(currentImageDataObject.getDate());
-            urlText.setText(currentImageDataObject.getUrlString());
+
 
             //load saved image
             loadImageFromDirectoryIntoView(newView, fileName, dirPath);
@@ -364,8 +373,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
        int idColIndex, dateColIndex, explanationColIndex, hdUrlColIndex, titleColIndex, urlColIndex, filenameColIndex
        are used to hold index values for column we are pulling data from with in our database.
-
-
 
      */
 
@@ -477,102 +484,80 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
     /*  createDeleteItemAlertDialog()
 
-        parameters: int
+        Parameters: int indexOfElement this is the ListView Element indexValue.
+
+        Variables:
+        String FileName, hold filename of image to be deleted
+        File path is used to hold the directory path were save images are stored in application memory
+        ImageDate imageDataObjToDelete the selected ImageData Object stored in the ListView at specified
+                  index passed into this method
+
+        View Objects:
+        View alert_dialog_layout hold inflated layout.
+        TextView Tile used to set title of ImageData object.
+        TextView Date used to set date of ImageData obj.
+        ImageViewImage used to display image to be reviewed.
 
         Behavior: takes int value for index of current item of list view, displays an AlertDialog
-        showing ID detail about current ImageDataObject and its position within the Arraylist / ListView
-        and allows the user to delete if the PositiveButton is clicked or closes the AlertDialog if the
-        NegativeButton is pressed.
+        showing the image in a thumbnail along with its Title and Date for the ImageDataObject that was selected.
 
-        Method Objects / Variables:
-        ImageData imageDataObjToDelete is set to the object at the index value passed into the method
-        as a parameter.
+        The user is then able to review and choose to delete the ImageData object and its database values as well
 
-        AlertDialog.Builder alertBuilder used to construct the AlertDialog window and its displayd values
+        Negative btn removes the Image Data, Positive close the Alert Dialog window (these were reversed due to the
+        position of the buttons in the window it self..
+
+
+        AlertDialog.Builder alertBuilder used to construct the AlertDialog window and its displayed values
         and buttons.
 
      */
 
     private void createDeleteItemAlertDialog(int indexOfElement){
-        //Gets message object at index of ListView element that was pressed.
+        //Gets ImageData object at index of ListView element that was pressed.
+
         ImageData imageDataObjToDelete = imageDataArrayList.get(indexOfElement);
 
-        //Gets layout for alert window.
-       // View alert_layout = getLayoutInflater().inflate(R.layout.alert_dialog_layout,null);
+        String fileName = imageDataObjToDelete.getFileName();
+        File path = new File(getCacheDir(), "imageFolder");
 
-        //Create View objects to output text values.
-        //TextView msgValue = alert_layout.findViewById(R.id.msgTextValue);
-        //TextView listViewMsg = alert_layout.findViewById(R.id.listViewMsg);
-       // TextView databaseMsg = alert_layout.findViewById(R.id.databaseMsg);
 
-        //Set View text values
-        //msgValue.setText(selectedMessage.getMsgValue());
-        //listViewMsg.setText("The position of your item is: " + indexOfViewElement);
-        //databaseMsg.setText("The database ID: " + selectedMessage.getId() );
+        //Sets layout to load into our dialog window
+        View alert_dialog_layout = getLayoutInflater().inflate(R.layout.delete_listview_item_dialog_layout,null);
+        //Wires up TextView and ImageView to their XML components
+        TextView title = alert_dialog_layout.findViewById(R.id.deleteItemTitleXML);
+        TextView date = alert_dialog_layout.findViewById(R.id.deleteItemDateXML);
+        ImageView image = alert_dialog_layout.findViewById(R.id.deleteItemImageXml);
 
-        //Build alert window.
+        //Sets text views
+        title.setText(imageDataObjToDelete.getTitle());
+        date.setText(imageDataObjToDelete.getDate());
+
+        //Hold image file to be stored.
+        File imageFile = new File(path, fileName);
+
+        //Loads image into ImageView.
+        try{
+            Bitmap imageToLoad = BitmapFactory.decodeStream(new FileInputStream(imageFile));
+
+            ImageView imageFrame = image;
+            imageFrame.setImageBitmap(imageToLoad);
+
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        //Build the Alert Dialog window.
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Do you want to delete this data?");
-        //alertBuilder.setView(alert_layout);
-        alertBuilder.setMessage("The position of your item  is:" + indexOfElement);
-
-        alertBuilder.setPositiveButton("Yes", (click, arg) -> {
+        alertBuilder.setView(alert_dialog_layout);
+        alertBuilder.setPositiveButton("No", (click, arg) -> { });
+        alertBuilder.setNegativeButton("Yes", (click, arg) -> {
 
             deleteImageData(imageDataObjToDelete);
             imageDataArrayList.remove(indexOfElement);
             imageDataArrayListAdapter.notifyDataSetChanged();
-
-            Toast.makeText(this, "Removed from favorites, ID = " + imageDataObjToDelete.getId(), Toast.LENGTH_LONG).show();
-
-            /*
-            //removes fragment detailsPaneFragment from view if larger device detected.
-            if(isTablet){
-                //creates SupportFragmentManager without the need to initialize to a variable.
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .remove(detailsPaneFragment)
-                        .commit();
-            }
-            */
-
-
+            Toast.makeText(this, imageDataObjToDelete.getTitle() + " has been deleted.", Toast.LENGTH_SHORT).show();
         });
 
-        alertBuilder.setNegativeButton("No", (click, arg) -> { });
-        alertBuilder.create().show();
-    }
-
-    /*  createItemDetailAlertDialog()
-
-        parameters: int
-
-        Behavior: takes int value for index of current item of list view, displays an AlertDialog
-        showing detail about current ImageDataObject. Title is set to Image Data object title value and
-        data values displayed are listview index position, database ID value, URL, HD URL, Image Date and fileName
-        if the NegativeButton is pressed the AlertDialog is closed.
-
-        Method Objects / Variables:
-        ImageData imageDataObj is set to the object at the index value passed into the method
-        as a parameter.
-
-        AlertDialog.Builder alertBuilder used to construct the AlertDialog window and its displayd values
-        and buttons.
-     */
-
-    private void createItemDetailAlertDialog(int indexOfViewElement){
-
-        ImageData imageDataObj = imageDataArrayList.get(indexOfViewElement);
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(imageDataObj.getTitle());
-        alertBuilder.setMessage( imageDataObj.getExplanation() + "\n\n" + "The index of this item in SavedImage_DB is: " + imageDataObj.getId()
-                                                               + "\n\n" + "The index of this item in Listview is: " + indexOfViewElement
-                                                               + "\n\n" + "The URL of saved image is: " + imageDataObj.getUrlString()
-                                                               + "\n\n" + "The HD URL of saved image is: " + imageDataObj.getHdUrlString()
-                                                               + "\n\n" + "The Date of saved image is: " + imageDataObj.getDate()
-                                                               + "\n\n" + "The Filename of saved image is: " + imageDataObj.getFileName()
-
-        );
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
         alertBuilder.create().show();
     }
 
@@ -581,7 +566,6 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
     private void deleteImageData(ImageData imageDataToDelete){
         dbObject.delete(DatabaseOpener.TABLE_NAME, DatabaseOpener.COL_ID + "= ?", new String[] {Long.toString(imageDataToDelete.getId())});
     }
-
 
     /* createAlertDialogHelpWindow()
 
@@ -598,21 +582,23 @@ public class SavedImages extends AppCompatActivity implements NavigationView.OnN
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.savedImageHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.savedImageHelpMenuParaOne);
         paragraphTwo.setText(R.string.savedImageHelpMenuParaTwo);
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.savedImageHelpMenuDialogTitle);
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
     }
-
 
 
 }//end of file

@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">CST_2335_Final_Project</string>
+    <string name="app_name">Image de la Date</string>
 
     <!--   Start Activity Strings      -->
     <string name="startTitleTextString">NASA Image de la Date</string>
@@ -8,7 +8,7 @@
 
 
     <!--   Main Menu Activity Strings      -->
-    <string name="toolbarTitleMainMenuActivity">Menu principal v2.0</string>
+    <string name="toolbarTitleMainMenuActivity">Menu principal</string>
     <string name="mainMenuTitle">Menu principal</string>
     <string name="mainMenuTodaysImageBtnText">Voir l\'image d\'aujourd\'hui</string>
     <string name="mainMenuPickDateBtnText">Sélectionnez la date pour voir l\'image</string>
@@ -21,12 +21,13 @@
     <string name="mainMenuHelpMenuParaThree">Bouton d\'image enregistrée: amène l\'utilisateur à l\'activité d\'images enregistrées.</string>
 
     <!--   Image View Activity Strings  -->
-    <string name="toolbarTitleImageViewActivity">Affichage des images v2.0</string>
+    <string name="toolbarTitleImageViewActivity">Affichage des images</string>
+    <string name="imageTitleText">Title:</string>
     <string name="DateTitleString">Date:</string>
     <string name="urlTitleString">URL: </string>
     <string name="expTitleString">Explication:</string>
     <string name="hdUrlBtnString">Voir l\'image HD</string>
-    <string name="snackbarMessage">Ajouté à la liste ImageData favorite.</string>
+    <string name="snackbarMessage">A été enregistré.</string>
     <string name="snackbarCallToAction">Voir les favoris maintenant!</string>
     <string name="saveImageBtn">Enregistrer l\'image</string>
 
@@ -37,7 +38,11 @@
     <string name="imageViewHelpMenuParaThree">Bouton Enregistrer l\'image: lorsque vous cliquez sur ce bouton, l\'image actuelle et ses données sont enregistrées dans la mémoire de l\'application.</string>
 
     <!--   Pick Date Activity Strings  -->
-    <string name="toolbarTitleDatePickerActivity">Sélecteur de date v2.0</string>
+    <string name="toolbarTitleDatePickerActivity">Sélecteur de date</string>
+    <string name="date_pick_title">Sélectionnez la date pour voir l\'image</string>
+    <string name="pickDateEditTextButton">Clique pour voir</string>
+    <string name="datePickerButton">Entrez la date de l\'image à afficher</string>
+    <string name="editTextTitle">Afficher la date sélectionnée</string>
 
     <!--   Pick Date Activity View Activity Help Menu  -->
     <string name="datePickerHelpMenuDialogTitle">Activité du sélecteur de date</string>
@@ -46,13 +51,13 @@
     <string name="pickedDateHelpMenuParaThree"></string>
 
     <!--  Saved Images Activity Strings  -->
-    <string name="toolbarTitleSavedImagesActivity">Images enregistrées v2.0</string>
+    <string name="toolbarTitleSavedImagesActivity">Images enregistrées</string>
 
     <!--  Saved Image Activity Help Menu  -->
     <string name="savedImageHelpMenuDialogTitle">Activité des images enregistrées</string>
     <string name="savedImageHelpMenuParaOne">Lorsque vous cliquez sur une image, une fenêtre s\'ouvre affichant des informations détaillées sur l\'image enregistrée.</string>
     <string name="savedImageHelpMenuParaTwo">Lorsqu\'un clic long sur une image ouvre une fenêtre d\'alerte vous demandant si vous souhaitez supprimer cette entrée de la mémoire de l\'application.</string>
-    <string name="savedImageHelpMenuParahree"></string>
+    <string name="savedImageHelpMenuParaThree"></string>
     <!-- ToolBar Strings -->
     <string name="menuItemOneTitle">Domicile</string>
     <string name="menuItemTwoTitle">L\'image d\'aujourd\'hui</string>
@@ -62,6 +67,8 @@
 
     <!-- ToolBar Overflow Menu Strings -->
     <string name="helpMenuTitle">Info</string>
+    <string name="helpMenuCloseBtnText">Fermer</string>
+
 
     <!-- drawer frame -->
     <string name="open">Open</string>
@@ -71,6 +78,10 @@
     <string name="sideMenuItemTwo">L\'image d\'aujourd\'hui</string>
     <string name="sideMenuItemThree">Choisir la date de l\'image</string>
     <string name="sideMenuItemFour">Liste des images enregistrées</string>
+
+    <!-- Delete imageData window -->
+    <string name="deleteImageHeader">Supprimer les données d\'image ?</string>
+
 
 
 </resources>

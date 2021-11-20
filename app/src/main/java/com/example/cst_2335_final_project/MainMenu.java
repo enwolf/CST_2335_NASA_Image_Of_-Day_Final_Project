@@ -1,33 +1,51 @@
 package com.example.cst_2335_final_project;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private Toolbar toolbar;
+    private String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    private String[] stringDateArray = date.split("-");
+
+    private  CharSequence text =  stringDateArray[0].toString()  + stringDateArray[1].toString() + stringDateArray[2].toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
         Button todayBtn = findViewById(R.id.viewTodayImageMainMenuBtnXML);
         Button PickDateBtn = findViewById(R.id.pickDateMainMenuBtnXML);
         Button SavedImageBtn = findViewById(R.id.savedImagesMainMenuBtnXML);
@@ -49,14 +67,12 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         //Without this two statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-
-
-
         Intent nextActivity = new Intent(this, ImageViewActivity.class);
-        todayBtn.setOnClickListener(click -> startActivity(nextActivity));
+
+        todayBtn.setOnClickListener(click -> {Toast.makeText(this, "     Today \n"  + date, Toast.LENGTH_SHORT).show(); startActivity(nextActivity);});
 
         Intent pickedDateActivity = new Intent(this, PickDateActivity.class);
-        PickDateBtn.setOnClickListener(click -> startActivity(pickedDateActivity));
+        PickDateBtn.setOnClickListener(Click -> startActivity(pickedDateActivity));
 
         Intent savedActivity = new Intent(this, SavedImages.class);
         SavedImageBtn.setOnClickListener(click -> startActivity(savedActivity));
@@ -89,7 +105,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
@@ -97,29 +112,24 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
 
@@ -142,56 +152,60 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         return false;
     }
 
+    /* createAlertDialogHelpWindow()
+
+
+       Sets alert_dialog_layout which holds the inflated layout for alert dialog window
+       Create View objects which we will use to set text values.
+       Set Text values for View's.
+       Build alert window via AlertDialog.Builder and display it to the user.
+
+    */
 
     private void createAlertDialogHelpWindow(){
 
 
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
-        TextView paragraphThree = alert_dialog_layout.findViewById(R.id.helpMenuItemThreeXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.mainMenuHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.mainMenuHelpMenuParaOne);
         paragraphTwo.setText(R.string.mainMenuHelpMenuParaTwo);
-        paragraphThree.setText((R.string.mainMenuHelpMenuParaThree));
 
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.mainMenuHelpMenuDialogTitle);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
     }
 

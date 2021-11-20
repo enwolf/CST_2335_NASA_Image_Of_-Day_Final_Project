@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,10 +20,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 public class PickDateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -55,26 +60,32 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = findViewById(R.id.sideNavMenu);
         navigationView.setNavigationItemSelectedListener(this);
-        //Without this two statements the navigation menu's menuItems were not responding to clicks events.
+        //Without this  statements the navigation menu's menuItems were not responding to clicks events.
         navigationView.bringToFront();
 
-        viewTodayImageBtn.setOnClickListener(Click -> {
+        datePickButton.setOnClickListener(Click -> { startActivity(ReadyDataPickerIntent(nextActivity,datePicker)); });
 
-            String editTextValue = enteredDate.getText().toString();
-            nextActivity.putExtra("date",editTextValue);
-            startActivity(nextActivity);
-
-        });
-
-        datePickButton.setOnClickListener(Click -> {
-
-            startActivity(ReadyDataPickerIntent(nextActivity,datePicker));
-            Toast.makeText(this, datePickerDate, Toast.LENGTH_SHORT).show();
-
-        });
+        viewTodayImageBtn.setOnClickListener(Click -> { sendEnteredDate(nextActivity,enteredDate);  });
 
     }
 
+    /* sendEnteredDate()
+
+        Parameters:
+
+        EditText the date/value entered by the user through the <EditText> View.
+        Intent nextActivity, the activity to be loaded.
+
+        Attaches EditText Value as Extra
+        Starts Activity based on the passed Intent along with its extras.
+
+     */
+
+    public void sendEnteredDate(Intent nextActivity, EditText date){
+
+        nextActivity.putExtra("date", date.getText().toString());
+        startActivity(nextActivity);
+    }
 
     // Inflate the menu items for use in the action bar
     @Override
@@ -101,40 +112,33 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = null;
-        //Finds menu items from XML file and handles a case for item selected.
+         //Finds menu items from XML file and handles a case for item selected.
         switch(item.getItemId())
         {
             //what to do when the menu item is selected:
             case R.id.toolBarMainMenuIcon:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "You clicked home icon item";
                 break;
             case R.id.toolBarTodayImageIcon:
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
-                message = "You clicked on imageViewActivity menu item";
                 break;
             case R.id.toolBarPickDateIcon:
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
-                message = "You clicked on pickDateActivity menu item";
                 break;
             case R.id.toolBarSavedImageIcon:
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
-                message = "You clicked on savedImagesActivity menu item";
                 break;
             case R.id.toolBarOverFlowHelpMenu:
                 createAlertDialogHelpWindow();
-                message = "You clicked on the overFlowHelpMenu menu item two";
                 break;
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         return true;
     }
-
 
 
     /* onNavigationItemSelected()
@@ -149,7 +153,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         String message = null;
 
         switch(item.getItemId())
@@ -157,37 +160,28 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
             case R.id.sideMenuMainMenuXML:
                 Intent mainMenu = new Intent(this, MainMenu.class);
                 startActivity(mainMenu);
-                message = "Main Menu item Clicked.";
                 break;
             case R.id.sideMenuTodayImageXML:
-                message = "sideMenuTodayImageXML item Clicked.";
                 Intent imageViewActivity = new Intent(this, ImageViewActivity.class);
                 startActivity(imageViewActivity);
                 break;
             case R.id.sideMenuPickDateIconXML:
-                message = "sideMenuPickDateIconXML item Clicked.";
                 Intent pickDateActivity = new Intent(this, PickDateActivity.class);
                 startActivity(pickDateActivity);
                 break;
             case R.id.sideMenuSavedImagesIconXML:
-                message = "sideMenuSavedImagesIconXML item Clicked.";
                 //this makes the back button on the device return to the first activity.
                 this.finish();
                 Intent savedImagesActivity = new Intent(this, SavedImages.class);
                 startActivity(savedImagesActivity);
                 break;
-
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.sideMenuDrawerLayoutXML);
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-
         return false;
     }
-
-
 
     /* ReadyDataPickerIntent()
 
@@ -206,7 +200,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
        returns the intent with included extra's
 
      */
-
 
     private Intent ReadyDataPickerIntent (Intent intent, DatePicker datePicker) {
 
@@ -236,9 +229,6 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
         return intent;
     }
 
-
-
-
     /* createAlertDialogHelpWindow()
 
 
@@ -251,22 +241,25 @@ public class PickDateActivity extends AppCompatActivity implements NavigationVie
 
     private void createAlertDialogHelpWindow(){
 
-
         View alert_dialog_layout = getLayoutInflater().inflate(R.layout.help_menu_alert_dialog_layout,null);
 
-        TextView title = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
+        TextView activityTitle = alert_dialog_layout.findViewById(R.id.helpMenuActivityTitleXML);
+        TextView info = alert_dialog_layout.findViewById(R.id.helpMenuTitleXMl);
         TextView paragraphOne = alert_dialog_layout.findViewById(R.id.helpMenuItemOneXML);
         TextView paragraphTwo = alert_dialog_layout.findViewById(R.id.helpMenuItemTwoXML);
 
-        title.setText(R.string.helpMenuTitle);
+        activityTitle.setText(R.string.datePickerHelpMenuDialogTitle);
+        info.setText(R.string.helpMenuTitle);
+
         paragraphOne.setText(R.string.pickedDateHelpMenuParaOne);
         paragraphTwo.setText(R.string.pickedDateHelpMenuParaTwo);
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.datePickerHelpMenuDialogTitle);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         alertBuilder.setView(alert_dialog_layout);
-        alertBuilder.setNegativeButton("Close", (click, arg) -> { });
+        alertBuilder.setNegativeButton(R.string.helpMenuCloseBtnText, (click, arg) -> { });
         alertBuilder.create().show();
+
+
     }
 
 

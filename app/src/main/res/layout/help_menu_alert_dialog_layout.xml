@@ -1,47 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <TextView android:id="@+id/helpMenuActivityTitleXML"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/lightBlack" />
 
     <ImageView android:id="@+id/helpMenuIconXML"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/info_icon"
         android:layout_marginTop="5dp"
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@id/helpMenuTitleXMl"
-        />
+        android:layout_below="@id/helpMenuActivityTitleXML" />
 
     <TextView android:id="@+id/helpMenuTitleXMl"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/helpMenuActivityTitleXML"
         android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="15dp"
-        android:textSize="25dp"
-        android:text="@string/helpMenuTitle"        />
-
+        android:textSize="35dp"
+        android:text="@string/helpMenuTitle"
+        android:textColor="@color/white"    />
 
     <TextView android:id="@+id/helpMenuItemOneXML"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpMenuTitleXMl"
         android:padding="12dp"
-        android:layout_marginBottom="5dp" />
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"    />
 
     <TextView android:id="@+id/helpMenuItemTwoXML"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpMenuItemOneXML"
         android:padding="12dp"
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
+        android:textColor="@color/white"
         android:layout_marginBottom="5dp" />
 
     <TextView android:id="@+id/helpMenuItemThreeXML"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpMenuItemTwoXML"
+        android:textColor="@color/white"
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
         android:padding="12dp"
-        />
+        android:layout_marginBottom="15dp"  />
 
 </RelativeLayout>
